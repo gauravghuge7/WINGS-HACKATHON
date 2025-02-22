@@ -79,6 +79,62 @@ const getUserDashBoard = asyncHandler(async (req, res, next) => {
       }
 });
 
+const getEventDashboard = asyncHandler(async (req, res, next) => {
+    try {        
+        const user = await User.findById(req.user.id);
+        
+        if(!user) {
+            throw new ApiError(400, 'User not found');
+        }   
+        
+        const userData = await User.aggregate([
+            {
+                $match: {
+                    userEmail: user.userEmail
+                }
+            },
+            {
+                $lookup: {
+                    from: "events",
+                    localField: "_id",
+                    foreignField: "user",
+                    as: "events"
+                }
+            },
+            {
+                $addFields: {
+                    events: "$events"
+                }
+            },
+            
+            {
+                $project: {                    
+                    userFirstName: 1,
+                    userLastName: 1,
+                    email: 1,
+                    events: 1,
+                }
+            }
+        ]); 
+        
+        const events = await Event.find({eventOrganiser: user._id});    
+        return res
+            .status(200)
+            .json(
+                new ApiResponse(
+                    200, 
+                    'User dashboard successfully', 
+                    {
+                        events,
+                        userDashboard: userData
+                    }
+                )
+            )
+    } 
+    catch (error) {
+        throw new ApiError(500, error.message);
+    }
+});
 
 
 const getUserProfile = asyncHandler(async (req, res, next) => {

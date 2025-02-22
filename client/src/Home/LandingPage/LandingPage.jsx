@@ -1,5 +1,6 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
   const features = [
@@ -97,22 +98,32 @@ const LandingPage = () => {
               Secure, scalable platform for Fortune 500 companies and global institutions. 
               <span className="block mt-2 text-purple-200">GDPR & SOC2 Compliant</span>
             </motion.p>
-
+           
             <div className="flex justify-center gap-4">
+              
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-xl text-lg font-medium shadow-2xl hover:shadow-purple-500/20 transition-all"
-              >
+              > <Link 
+                to="/user/CreateEvent"
+                className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-xl text-lg font-medium shadow-2xl hover:shadow-purple-500/20 transition-all">
                 Request Enterprise Demo
+
+                </Link>
                 <span className="ml-3">→</span>
               </motion.button>
+        
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="border-2 border-purple-500 text-purple-100 px-8 py-4 rounded-xl text-lg font-medium hover:bg-purple-900/20 transition-all"
               >
+                <Link
+                 to="/eventmarketer">
                 View Case Studies
+                </Link>
+                
               </motion.button>
             </div>
           </motion.div>
@@ -233,7 +244,11 @@ const LandingPage = () => {
                 whileTap={{ scale: 0.95 }}
                 className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-8 py-4 rounded-xl text-lg font-medium shadow-2xl hover:shadow-purple-500/20 transition-all"
               >
+                <Link
+                 to="/contact"> 
                 Start Free Pilot
+                </Link>
+               
                 <span className="ml-3">→</span>
               </motion.button>
               <motion.button
