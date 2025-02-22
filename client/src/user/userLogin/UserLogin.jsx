@@ -2,39 +2,23 @@
 import React from 'react';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-<<<<<<< HEAD
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 import useReactApi from "../../hooks/useReactApi/useReactApi";
 // import { setUserData } from "../../Redux/UserReducer/UserReducer";
-=======
-import useSendFormData from "./../../Hooks/useReactApi/useReactApi";
-import { useAuth0 } from "@auth0/auth0-react";
-import { toast, ToastContainer } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { setUserData } from "../../Redux/UserReducer/UserReducer";
->>>>>>> 1a1d3634dda2cdab991aeb239546f61efc92273a
 
 const UserLogin = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-<<<<<<< HEAD
   const { loading, sendFormData } = useReactApi();
-=======
-  const { loading, sendFormData } = useSendFormData();
->>>>>>> 1a1d3634dda2cdab991aeb239546f61efc92273a
   const { loginWithPopup, isAuthenticated, getIdTokenClaims, user } = useAuth0();
   const [loginError, setLoginError] = useState("");
   const navigate = useNavigate();
 
-<<<<<<< HEAD
   
-=======
-  // Handle Google login
->>>>>>> 1a1d3634dda2cdab991aeb239546f61efc92273a
   const handleGoogleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -44,7 +28,6 @@ const UserLogin = () => {
       });
 
       const response = await getIdTokenClaims();
-<<<<<<< HEAD
 
       if (response && response.email) {
         const googleData = {
@@ -74,38 +57,6 @@ const UserLogin = () => {
 
 
   // // Handle form login
-=======
-
-      if (response && response.email) {
-        const googleData = {
-          email: response.email,
-          email_verified: response.email_verified,
-        };
-
-
-        
-        const { data, error } = await sendFormData("/api/v1/user/google-login", googleData);
-        dispatch(setUserData(data?.data?.user));
-
-        if (error) {
-          setLoginError(error);
-          toast.error(error);
-          return;
-        }
-        console.log(data);
-        toast.success(data?.message);
-        localStorage.setItem("eventUser", true);
-        localStorage.setItem("user", true);
-        dispatch(setUserData(data?.data?.user));
-        navigate("/");
-      }
-    } 
-    catch (error) {
-      console.error("Error during Google login:", error);
-    }
-  };
-  // Handle form login
->>>>>>> 1a1d3634dda2cdab991aeb239546f61efc92273a
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -123,11 +74,7 @@ const UserLogin = () => {
       toast.success(success);
       localStorage.setItem("eventUser", true);
       localStorage.setItem("user", true);
-<<<<<<< HEAD
       // dispatch(setUserData(data?.data));
-=======
-      dispatch(setUserData(data?.data));
->>>>>>> 1a1d3634dda2cdab991aeb239546f61efc92273a
       navigate("/");
     } 
     catch (error) {
