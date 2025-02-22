@@ -1,6 +1,4 @@
-
 import { createSlice } from '@reduxjs/toolkit'
-
 
 
 
@@ -15,7 +13,7 @@ try {
 }
 
 
-const initialState = {
+const intialState = {
 
    userData: {
       userId : localData?.userId || '',
@@ -34,23 +32,20 @@ const initialState = {
 
 }
 
+const userReducer = createSlice({
+   name: 'user',
+   initialState: intialState,
 
-const userSlice = createSlice({
-      name: 'user',
-      initialState,
-
-
-      reducers: {
-            setUserData: (state, action) => {
-                  state.userData = action.payload,
-                  state.userData.isLoggedIn = true,
-                  localStorage?.setItem('data', JSON?.stringify(action.payload));    
-            }
+   reducers: {
+      setUserData: (state, action) => {
+         state.userData = action.payload,
+         state.userData.isLoggedIn = true,
+         localStorage?.setItem('data', JSON?.stringify(action.payload));    
       }
+   }
 })
 
 
+export const { setUserData} = userReducer.actions;
 
-export const { setUserData } = userSlice.actions
-
-export default userSlice.reducer
+export default userReducer.reducer;
