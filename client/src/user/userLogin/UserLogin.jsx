@@ -71,7 +71,7 @@ const UserLogin = () => {
         return;
       }
       toast.success(success);
-      localStorage.setItem("eventUser", true);
+      localStorage.setItem("eventUser",true);
       localStorage.setItem("user", true);
       // dispatch(setUserData(data?.data));
       navigate("/");
@@ -149,7 +149,7 @@ const UserLogin = () => {
               </button>
 
               <p className="text-center text-gray-600">
-                Don't have an account?{" "}
+                Not  have an account?{" "}
                 <Link to="/UserSignup" className="text-blue-600 hover:underline">
                   Register here
                 </Link>

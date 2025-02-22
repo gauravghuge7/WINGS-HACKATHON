@@ -196,7 +196,6 @@ const updateAdmin = asyncHandler(async (req, res, next) => {
 });
 
 
-
 export {
     register,
     login,
