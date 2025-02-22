@@ -18,6 +18,7 @@ const NotFound = React.lazy(() => import('../../components/notfound/NotFound'));
 const Landing = React.lazy(() => import('../../home/landing/Landing'));
 
 import ContactUs from './../../components/contactus/ContactUs';
+import Services from '../../components/serv/Services';
 
 import UserSignup from '../../user/userSignup/UserSignup';
 
@@ -67,7 +68,11 @@ const UserRouter = () => {
 
                         <Route path='/services' element={<ContactUs />} />
 
+                        <Route path='/services' element={<Services/>} />
+                        
 
+
+ 
 
 
 
