@@ -1,30 +1,36 @@
-# Stage 1: Build Vite React App
-FROM node:20-slim AS builder
+# Use an official Node.js runtime as the base image
+FROM node:18-alpine as build
 
-# Install necessary packages
-RUN apt-get update && apt-get install -y python3 make g++
-
-# Set working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and install dependencies
+# Copy package.json and package-lock.json (or yarn.lock)
 COPY package*.json ./
-RUN npm install
+
+# Install dependencies
+RUN npm install --legacy-peer-deps
+# If using Yarn, replace the above line with:
+# RUN yarn install --frozen-lockfile
 
 # Copy the rest of the application code
 COPY . .
 
-# Build the Vite app for production
+# Build the React app
 RUN npm run build
+# If using Yarn, replace the above line with:
+# RUN yarn build
 
-# Stage 2: Serve using Nginx
+# Use a lightweight web server to serve the React app
 FROM nginx:alpine
 
-# Copy build output to Nginx html directory
-COPY --from=builder /app/dist /usr/share/nginx/html
+# Copy the built React app from the previous stage
+COPY --from=build /app/build /usr/share/nginx/html
 
-# Expose port 80 for Render
+# Copy the custom Nginx configuration (optional)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose port 80 for the web server
 EXPOSE 80
 
-# Start Nginx server
+# Start the Nginx server
 CMD ["nginx", "-g", "daemon off;"]
