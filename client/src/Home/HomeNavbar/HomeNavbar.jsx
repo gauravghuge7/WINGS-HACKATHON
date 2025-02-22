@@ -81,7 +81,7 @@ const ProfessionalHeader = React.memo( () => {
         style={{ height: "56px" }}
       >
         <Link to="/" className="text-xl font-semibold text-gray-900 tracking-wide">
-          MyWebsite ✨
+          Event Wallah ✨
         </Link>
 
         <nav className="hidden md:flex space-x-8">
