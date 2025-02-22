@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 import useReactApi from "../../hooks/useReactApi/useReactApi";
-// import { setUserData } from "../../Redux/UserReducer/UserReducer";
+import { setUserData } from "../../Redux/UserReducer/UserReducer";
 import axios from "axios";
 
 const UserLogin = () => {
@@ -39,10 +39,11 @@ const UserLogin = () => {
         await axios.post("/api/v1/user/loginUsingGoogle", googleData)
         .then((res) => {
             if(res.status === 200) {
-              toast.success("User created successfully");
+              toast.success("User LoggedIn successfully");
               localStorage.setItem("eventUser", true);
               localStorage.setItem("user", true);
-              // dispatch(setUserData(data?.data?.user));
+              console.log(data?.data);
+              dispatch(setUserData(data?.data?.user));
               navigate("/");
             } else {
               toast.error("Something went wrong");
@@ -53,19 +54,7 @@ const UserLogin = () => {
             toast.error(err?.response?.data?.message);
             console.log(err);
         })
-        // dispatch(setUserData(data?.data?.user));
-
-        // if (error) {
-        //   setLoginError(error);
-        //   toast.error(error);
-        //   return;
-        // }
-        // console.log(data);
-        // toast.success(data?.message);
-        // localStorage.setItem("eventUser", true);
-        // localStorage.setItem("user", true);
-        // dispatch(setUserData(data?.data?.user));
-        // navigate("/");
+       
       }
     } 
     catch (error) {
@@ -79,39 +68,22 @@ const UserLogin = () => {
     e.preventDefault();
     try {
       const url = "/api/v1/user/login";
-      // const formData = {
-      //   userEmail: username,
-      //   userPassword: password,
-      // };
-
-      const testData = new FormData();
-      testData.append("userEmail", username);
-      testData.append("userPassword", password);
-
-      console.log("testData => ", testData);
-
-      await axios.post(url, testData)
-      .then((res) => {
-
-         console.log("User Created Successfully");
-
-          localStorage.setItem("eventUser", true);
-          localStorage.setItem("user", true);
-          // dispatch(setUserData(data?.data));
-          navigate("/");
-      })
-      .catch((err) => {
-          toast.error(err?.response?.data?.message);
-          console.log(err);
-      })
+      const formData = {
+        userEmail: username,
+        userPassword: password,
+      };
+      const { data, error, success  } = await sendFormData(url, { userData: formData });
+      if (error) {
+        setLoginError(error);
+        toast.error(error); 
+        return;
+      }
+      toast.success(success);
+      localStorage.setItem("eventUser", true);
+      localStorage.setItem("user", true);
+      dispatch(setUserData(data?.data));
       
-      
-
-      // toast.success(success);
-      // localStorage.setItem("eventUser", true);
-      // localStorage.setItem("user", true);
-      // // dispatch(setUserData(data?.data));
-      // navigate("/");
+      navigate("/");
     } 
     catch (error) {
       console.log("error => ", error);
@@ -186,7 +158,7 @@ const UserLogin = () => {
               </button>
 
               <p className="text-center text-gray-600">
-                Don't have an account?{" "}
+                Not  have an account?{" "}
                 <Link to="/UserSignup" className="text-blue-600 hover:underline">
                   Register here
                 </Link>

@@ -1,13 +1,24 @@
-import mongoConnection from './src/config/mongoConnection.js';
-import app from './src/app.js';
-const PORT = process.env.PORT || 5000;
+// import app from './src/app.js';
+import server from './src/socket/socketServer.js';
+import connectDB from './src/db/connection/db.config.js';
+import dotenv from "dotenv";
 
-mongoConnection()
+dotenv.config({
+   path: './.env'
+});
 
+// console.log(process.env.MONGODB_URI);
+
+
+const PORT = 5000;
+
+
+
+//  Connecting to the database
+connectDB()
 .then( () => {
 
-   
-  app.listen(PORT, () => {
+   server.listen(PORT, () => {
       console.log(`app is listening on : ${PORT}
          
             🌐🌐  Here you can access the app
@@ -18,6 +29,5 @@ mongoConnection()
 .catch( (err) => {
    console.log("Error in Express Connection", err);
 });
-
 
 
