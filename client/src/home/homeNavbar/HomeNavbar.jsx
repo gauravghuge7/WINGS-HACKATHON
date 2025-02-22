@@ -49,11 +49,11 @@ const ProfessionalHeader = React.memo( () => {
   const navLinks = useMemo(
     () => [
       { name: "Home", to: "/" },
-      { name: "Services", to: "/eventmarketer" },
+      { name: "Services", to: "/services" },
       { name: "Contact", to: "/contact" },
       { name: "Create Event", to: "/user/CreateEvent" },
       { name: "Latest Events", to: "/latestEvents" },
-      { name: "Docs", to: "/documentation" },
+
     ],
     []
   );
@@ -112,7 +112,7 @@ const ProfessionalHeader = React.memo( () => {
           </button>
         ) : (
           <Link
-            to="/userLogin"
+            to="/client/src/user/userLogin/UserLogin.jsx"
             className="flex items-center px-6 py-2 text-lg text-white font-medium rounded-full bg-gradient-to-r from-blue-500 to-blue-700 transition-transform duration-300 hover:scale-105 hover:from-blue-600 hover:to-blue-800 shadow-md"
           >
             Login
