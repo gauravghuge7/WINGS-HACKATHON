@@ -2,37 +2,22 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 
-
 import { Routes, Route } from 'react-router-dom'
-
 
 import UserTemplate from './UserTemplate'
 
-
 import UserProtection from './UserProtection';
 
-
 import UserLogin from '../../user/Userlogin/Userlogin';
-import CreateEvent from '../../user/';
-import EditEventForm from '../../user/editEvent/EditEventForm';
-
 import CreateEvent from '../../user/createEvent/CreateEvent';
 import EditEventForm from '../../user/editEvent/EditEventForm';
 
 
 const NotFound = React.lazy(() => import('../../components/notfound/NotFound'));
 
-
 const Landing = React.lazy(() => import('../../home/landing/Landing'));
 
-
 import ContactUs from './../../components/contactus/ContactUs';
-import Services from '../../components/services/Services';
-import UserSignup from '../../user/userSignup/UserSignup';
-
-
-
-
 import Services from '../../components/services/Services';
 import UserSignup from '../../user/userSignup/UserSignup';
 
@@ -80,8 +65,6 @@ const UserRouter = () => {
                         <Route path='/contact' element={<ContactUs />} />
 
                         <Route path='/latestEvents' element={<ContactUs />} />
-
-                        <Route path='/services' element={<ContactUs />} />
 
                         <Route path='/services' element={<Services/>} />
                         

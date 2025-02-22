@@ -80,7 +80,7 @@ const ProfessionalHeader = React.memo( () => {
         } fixed top-0 left-0 w-full flex items-center justify-between px-10 py-3 bg-white/30 backdrop-blur-lg shadow-md border-b border-white/20 z-50`}
         style={{ height: "56px" }}
       >
-        <Link to="/" className="text-xl font-semibold text-gray-900 tracking-wide">
+        <Link to="/" className="text-xl font-semibold text-gray-900 tracking-wide ">
         Event Wallah ✨
         </Link>
 
