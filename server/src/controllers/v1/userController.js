@@ -91,6 +91,7 @@ const login = asyncHandler(async (req, res, next) => {
         userPassword
     };
 
+
     try {
 
         emptyFieldValidator(...Object.values(userData)?.flat());
@@ -226,7 +227,7 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
     
         const resetPasswordUrl = `${process.env.FRONTEND_URL}/reset/${resetToken}`;
         console.log("resetToken :"+resetToken);
-        console.log("user => ", user);
+        console.log("user.forgotPassordToken => ", user.forgotPasswordToken);
     
          // sendEmail
          const sub = "Reset Password";
@@ -266,7 +267,8 @@ const logout = (req,res) => {
 const resetPassword = asyncHandler(async (req, res, next) => {
     const { resetToken, newPassword } = req.body;
 
-    // console.log(resetToken, `newPassword`);
+    console.log("resetToken =>", resetToken);
+    console.log("newPassword =>", newPassword);
     
     emptyFieldValidator({resetToken, newPassword});
     
@@ -275,20 +277,21 @@ const resetPassword = asyncHandler(async (req, res, next) => {
     }
     
     try {
-        const user = await User.findOne({ forgotPassword: resetToken });
+        const user = await User.findOne({ forgotPasswordToken: resetToken });
         
         if(!user) {
             throw new ApiError(400, 'User not found');
         }
 
-        // user.userPassword = newPassword;   
-        // user.forgotPassword = undefined;
-        // await user.save();
+        user.userPassword = newPassword;   
+        user.forgotPassword = undefined;
+        await user.save();
         
         res.send(new ApiResponse(200, 'Password reset successfully'));
     } catch(err) {
         throw new ApiError(500, err.message);
-    }    
+    }
+    
 });
 
 
