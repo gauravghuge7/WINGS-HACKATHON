@@ -10,6 +10,7 @@ import UserLogin from '../../user/Userlogin/Userlogin';
 const NotFound = React.lazy(() => import('../../components/notfound/NotFound'));
 const Landing = React.lazy(() => import('../../home/landing/Landing'));
 import ContactUs from './../../components/contactus/ContactUs';
+import Services from '../../components/serv/Services';
 
 
 
@@ -31,10 +32,10 @@ const UserRouter = () => {
 
                         <Route path='/contact' element={<ContactUs />} />
                         <Route path='/latestEvents' element={<ContactUs />} />
-                        <Route path='/services' element={<ContactUs />} />
+                        <Route path='/services' element={<Services/>} />
                         
 
-
+ 
 
 
 
