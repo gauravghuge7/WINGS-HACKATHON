@@ -26,13 +26,13 @@ const LandingPage = () => {
   const testimonials = [
     {
       feedback: "Cut our event planning costs by 30% while improving attendee satisfaction",
-      author: "Sarah Johnson",
+      author: "Vivek Deshmukh",
       role: "COO, TechSphere",
       logo: "🏢⚡" // Replace with actual logo component
     },
     {
       feedback: "The most robust platform we've used for global event management",
-      author: "Michael Chen",
+      author: "Dhiraj Kumavat",
       role: "Event Director, Fortune 500",
       logo: "🌍💼" // Replace with actual logo component
     },
