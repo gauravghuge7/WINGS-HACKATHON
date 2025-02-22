@@ -5,9 +5,9 @@ import { Routes, Route } from 'react-router-dom'
 import UserTemplate from './UserTemplate'
 import UserProtection from './UserProtection';
 
-import Landing from '../../home/landing/Landing';
 
-
+const NotFound = React.lazy(() => import('../../components/notfound/NotFound'));
+const Landing = React.lazy(() => import('../../home/landing/Landing'));
 
 
 
@@ -20,6 +20,9 @@ const UserRouter = () => {
 
                         {/*   Public Routes for landing page */}
 
+                        <Route index element={<Landing />} />
+
+                        {/*    user login components */}
                         <Route index element={<Landing />} />
 
 
@@ -39,7 +42,7 @@ const UserRouter = () => {
 
 
                   {/* Not Found Route */}
-                  <Route path='*' element={<h1>404 Not Found</h1>} />
+                  <Route path='*' element={<NotFound />} />
 
 
             </Routes>
