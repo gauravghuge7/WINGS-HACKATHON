@@ -1,0 +1,51 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "the project for practice",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "npm run dev",
+    "dev": "nodemon -r dotenv/config ./index.js"
+  },
+  "keywords": [
+    "javascript",
+    "react",
+    "node.js"
+  ],
+  "author": "gaurav ghuge, ganesh dandekar, pravin chavan, shubham shinde, sagar lokhande",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.5.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.7",
+    "ejs": "^3.1.10",
+    "ejs-mate": "^4.0.0",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongod": "^2.0.0",
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.9.3",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.16",
+    "nodemon": "^3.1.9",
+    "pdfkit": "^0.16.0",
+    "razorpay": "^2.9.5",
+    "recharts": "^2.15.1",
+    "redis": "^4.7.0",
+    "server": "file:",
+    "socket.io": "^4.8.1",
+    "validator": "^13.12.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "eslint": "^9.17.0",
+    "globals": "^15.14.0"
+  }
+}

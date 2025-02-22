@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect, useRef } from "react";
 import useSendFormData from "../../Hooks/useSendFormData/useSendFormData";
 import { ToastContainer, toast } from "react-toastify";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import gsap from "gsap";
+import img1 from "./pexels-pixabay-268533.jpg";
 
 const UserSignup = () => {
-  // State for form fields
+  // Form state management
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -16,15 +19,28 @@ const UserSignup = () => {
 
   const navigate = useNavigate();
   const { loginWithPopup, isAuthenticated, getIdTokenClaims, user } = useAuth0();
-  const {  loading, sendFormData } = useSendFormData();
+  const { loading, sendFormData } = useSendFormData();
 
-  // Handle input change
+  // Ref for the signup card for GSAP animations
+  const formRef = useRef(null);
+
+  // Entrance animation for the signup card
+  useEffect(() => {
+    gsap.from(formRef.current, {
+      y: 30,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+    });
+  }, []);
+
+  // Update form state when input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submission
+  // Handle form submission for signup
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -41,7 +57,7 @@ const UserSignup = () => {
     };
 
     try {
-      const {data, error, success} = await sendFormData("/api/v1/user/signup", { userData: formSendData });
+      const { data, error, success } = await sendFormData("/api/v1/user/signup", { userData: formSendData });
    
       if (error) {
         toast.error(error);
@@ -58,8 +74,7 @@ const UserSignup = () => {
       });
       navigate("/userLogin");
  
-    } 
-    catch (error) {
+    } catch (error) {
       console.log("error => ", error);
     }
   };
@@ -87,7 +102,7 @@ const UserSignup = () => {
           token: response.token,
         };
 
-        const {data, error, success} = await sendFormData("/api/v1/user/google-signup", googleData);
+        const { data, error, success } = await sendFormData("/api/v1/user/google-signup", googleData);
        
         if (error) {
           toast.error(error);
@@ -96,7 +111,6 @@ const UserSignup = () => {
 
         toast.success(success);
         navigate("/userLogin");
-
       }
     } catch (error) {
       console.error("Error during Google signup:", error);
@@ -104,14 +118,23 @@ const UserSignup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div
+      className="min-h-screen flex items-center justify-center p-6 relative"
+      style={{
+        background: `url(${img1}) no-repeat center center/cover`,
+      }}
+    >
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-black opacity-40 w-10"></div>
       <ToastContainer />
-      <div className="max-w-6xl w-full bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
+      <div
+        ref={formRef}
+        className="relative max-w-6xl w-full bg-white bg-opacity-40 backdrop-filter backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden flex flex-col lg:flex-row"
+      >
         {/* Left Section: Signup Form */}
-        <div className="w-full lg:w-1/2 p-10">
+        <div className="w-50 lg:w-1/2 p-10">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Create an Account</h2>
           <form className="space-y-6" onSubmit={handleSubmit}>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
@@ -124,7 +147,6 @@ const UserSignup = () => {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition duration-300"
                 />
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
                 <input
@@ -137,7 +159,6 @@ const UserSignup = () => {
                 />
               </div>
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
               <input
@@ -149,7 +170,6 @@ const UserSignup = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition duration-300"
               />
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
               <input
@@ -161,7 +181,6 @@ const UserSignup = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition duration-300"
               />
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
               <input
@@ -173,7 +192,6 @@ const UserSignup = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition duration-300"
               />
             </div>
-
             <button
               type="submit"
               className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 transition duration-300"
@@ -182,7 +200,6 @@ const UserSignup = () => {
               {loading ? "Signing up..." : "Sign Up"}
             </button>
           </form>
-
           <div className="mt-6">
             {!isAuthenticated ? (
               <button
@@ -210,19 +227,6 @@ const UserSignup = () => {
               </button>
             )}
           </div>
-        </div>
-
-        {/* Right Section: Illustration and Welcome Message */}
-        <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 to-indigo-700 flex-col justify-center items-center text-white p-10">
-          <img
-            src="https://via.placeholder.com/300"
-            alt="Illustration"
-            className="w-64 h-64 mb-8"
-          />
-          <h1 className="text-4xl font-bold mb-4">Welcome to Our Platform</h1>
-          <p className="text-center text-lg">
-            Join us to unlock exclusive features and manage your account seamlessly.
-          </p>
         </div>
       </div>
     </div>
