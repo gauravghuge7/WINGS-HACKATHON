@@ -23,22 +23,22 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link to="/" className="flex items-center gap-2 hover:text-gray-100">
-                  <span className="material-icons">home</span> Home
+                  <span className="material-icons"></span> Home
                 </Link>
               </li>
               <li>
                 <Link to="/about" className="flex items-center gap-2 hover:text-gray-100">
-                  <span className="material-icons">info</span> About Us
+                  <span className="material-icons"></span> About Us
                 </Link>
               </li>
               <li>
                 <Link to="/services" className="flex items-center gap-2 hover:text-gray-100">
-                  <span className="material-icons">build</span> Services
+                  <span className="material-icons"></span> Services
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="flex items-center gap-2 hover:text-gray-100">
-                  <span className="material-icons">contact_mail</span> Contact
+                  <span className="material-icons"></span> Contact
                 </Link>
               </li>
             </ul>
@@ -49,15 +49,15 @@ const Footer = () => {
             <h5 className="text-lg font-semibold text-gray-100 mb-4">Contact Us</h5>
             <ul className="space-y-3">
               <li className="flex items-center gap-2">
-                <span className="material-icons text-indigo-500">location_on</span>
+                <span className="material-icons text-indigo-500"></span>
                 AT samarthnagar Aurangabad Maharashtra
               </li>
               <li className="flex items-center gap-2">
-                <span className="material-icons text-indigo-500">phone</span>
+                <span className="material-icons text-indigo-500"></span>
                 8767482793
               </li>
               <li className="flex items-center gap-2">
-                <span className="material-icons text-indigo-500">email</span>
+                <span className="material-icons text-indigo-500"></span>
                 ghugegaurav43@gmail.com
               </li>
             </ul>

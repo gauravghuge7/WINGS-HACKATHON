@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 const mongoConnection = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/hackthon", {
+    await mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/hackthon", {
       // useNewUrlParser: true,
       // useUnifiedTopology: true,
     });

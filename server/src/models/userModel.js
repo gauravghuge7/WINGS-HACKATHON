@@ -94,6 +94,7 @@ const userSchema = new mongoose.Schema({
 userSchema.pre("save", async function() {
   
   if(this.isModified("userPassword")) {
+    console.log("this.userPassword =>", this.userPassword);
     this.userPassword = bcrypt.hashSync(this.userPassword, 10);
   }
 
@@ -127,7 +128,7 @@ userSchema.methods = {
 
     this.forgotPasswordExpiry = Date.now() + 15 * 60 * 1000;   // 15 min from now
 
-    return resetToken;
+    return this.forgotPasswordToken;
   }
 }
 
