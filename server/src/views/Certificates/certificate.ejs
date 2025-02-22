@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Achievement</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #f0f4f8, #cfe0f3);
+        }
+
+        .certificate {
+            max-width: 800px;
+            width: 90%;
+            padding: 20px;
+            background: #fff;
+            border: 10px solid #4a90e2;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .certificate h1 {
+            font-size: 2.5rem;
+            color: #4a90e2;
+            margin-bottom: 10px;
+        }
+
+        .certificate h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .certificate p {
+            font-size: 1rem;
+            color: #555;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .certificate .details {
+            margin-top: 20px;
+        }
+
+        .certificate .details div {
+            margin-bottom: 15px;
+        }
+
+        .signature {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .signature .sign {
+            text-align: center;
+        }
+
+        .signature .sign p {
+            margin: 5px 0;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .signature .sign img {
+            max-width: 100px;
+            height: auto;
+        }
+
+        @media (max-width: 600px) {
+            .certificate h1 {
+                font-size: 2rem;
+            }
+
+            .certificate h2 {
+                font-size: 1.5rem;
+            }
+
+            .certificate p {
+                font-size: 0.9rem;
+            }
+
+            .signature {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="certificate">
+        <h1>Certificate of Achievement</h1>
+        <h2>Presented to</h2>
+        <h2 style="font-weight: bold;">[Recipient's Name]</h2>
+        <p>For successfully completing the course <strong>[Course Name]</strong></p>
+        <p>on <strong>[Date]</strong> with distinction and excellence.</p>
+        <div class="details">
+            <div><strong>Institution:</strong> [Institution Name]</div>
+            <div><strong>Duration:</strong> [Duration of the Course]</div>
+        </div>
+        <div class="signature">
+            <div class="sign">
+                <img src="signature1.png" alt="Signature 1">
+                <p>[Authorized Person 1]</p>
+                <p>Designation</p>
+            </div>
+            <div class="sign">
+                <img src="signature2.png" alt="Signature 2">
+                <p>[Authorized Person 2]</p>
+                <p>Designation</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
