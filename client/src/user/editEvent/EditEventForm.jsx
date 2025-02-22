@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";
 import gsap from "gsap";
-import "react-quill/dist/quill.snow.css";
-import useSendFormData from "../../Hooks/useSendFormData/useSendFormData";
+// import "react-quill/dist/quill.snow.css";
+import useSendFormData from "../../Hooks/useReactApi/useReactApi";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -188,7 +188,7 @@ const EventForm = () => {
         </div>
         <div className="mt-4">
           <label className="font-bold">Event Description</label>
-          <ReactQuill value={eventDescription} onChange={seteventDescription} className="bg-white border rounded-md" />
+          {/* <ReactQuill value={eventDescription} onChange={seteventDescription} className="bg-white border rounded-md" /> */}
         </div>
       </form>
         <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
