@@ -9,132 +9,60 @@ import { uploadOnCloudinary } from '../../../utils/cloudinary.js';
 import { Event } from '../../../models/eventModels/event.model.js';
 
 
-
 const getUserDashBoard = asyncHandler(async (req, res, next) => {
-
-      try {
-
-
-            const user = await User.findById(req.user.id);
-            
-            if(!user) {
-                  throw new ApiError(400, 'User not found');
-            }
-
-            const userData = await User.aggregate([
-                  {
-                        $match: {
-                            userEmail: user.userEmail
-                        }
-                  },
-                  {
-                        $lookup: {
-                              from: "events",
-                              localField: "_id",
-                              foreignField: "user",
-                              as: "events"
-                        }
-                  },
-                  {
-                        $addFields: {
-                            events: "$events"
-                        }
-                  },
-                  
-                  {
-                        $project: {
-
-                              userFirstName: 1,
-                              userLastName: 1,
-                              email: 1,
-                              events: 1,
-
-                        }
-                  }
-
-            ]);
-
-            
-            const events = await Event.find({eventOrganiser: user._id});
-
-            console.log("userData =>",userData);
-
-
-            return res
-                  .status(200)
-                  .json(
-                        new ApiResponse(
-                              200, 
-                              'User dashboard successfully', 
-                              {
-                                events,
-                                userDashboard: userData
-                              }
-                        )
-                  )
-
-      } 
-      catch (error) {
-            throw new ApiError(500, error.message);
+    try {
+      const user = await User.findById(req.user.id);
+  
+      if (!user) {
+        throw new ApiError(404, 'User not found');
       }
-});
-
-const getEventDashboard = asyncHandler(async (req, res, next) => {
-    try {        
-        const user = await User.findById(req.user.id);
-        
-        if(!user) {
-            throw new ApiError(400, 'User not found');
-        }   
-        
-        const userData = await User.aggregate([
-            {
-                $match: {
-                    userEmail: user.userEmail
-                }
-            },
-            {
-                $lookup: {
-                    from: "events",
-                    localField: "_id",
-                    foreignField: "user",
-                    as: "events"
-                }
-            },
-            {
-                $addFields: {
-                    events: "$events"
-                }
-            },
-            
-            {
-                $project: {                    
-                    userFirstName: 1,
-                    userLastName: 1,
-                    email: 1,
-                    events: 1,
-                }
-            }
-        ]); 
-        
-        const events = await Event.find({eventOrganiser: user._id});    
-        return res
-            .status(200)
-            .json(
-                new ApiResponse(
-                    200, 
-                    'User dashboard successfully', 
-                    {
-                        events,
-                        userDashboard: userData
-                    }
-                )
-            )
-    } 
-    catch (error) {
-        throw new ApiError(500, error.message);
+  
+      // Fetch user data with events
+      const userData = await User.aggregate([
+        {
+          $match: {
+            _id: user._id,
+          },
+        },
+        {
+          $lookup: {
+            from: 'events',
+            localField: '_id',
+            foreignField: 'eventOrganiser',
+            as: 'events',
+          },
+        },
+        {
+          $project: {
+            userFirstName: 1,
+            userLastName: 1,
+            email: 1,
+            events: 1,
+          },
+        },
+      ]);
+  
+      if (!userData || userData.length === 0) {
+        throw new ApiError(404, 'User data not found');
+      }
+  
+      // Extract events from userData
+      const events = userData[0].events;
+  
+      return res
+        .status(200)
+        .json(
+          new ApiResponse(
+            200,
+            'User dashboard fetched successfully',
+            { events, userDashboard: userData[0] }
+          )
+        );
+    } catch (error) {
+      throw new ApiError(500, error.message || 'Failed to fetch user dashboard');
     }
-});
+  });
+
 
 
 const getUserProfile = asyncHandler(async (req, res, next) => {

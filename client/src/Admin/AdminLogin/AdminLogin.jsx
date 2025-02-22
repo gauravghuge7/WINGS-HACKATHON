@@ -4,44 +4,52 @@ import useSendFormData from "../../Hooks/useSendFormData/useSendFormData";
 import { ToastContainer } from "react-toastify";
 
 function AdminLogin() {
+  // State hooks for email, password, and login error
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-
-  const { loading, sendFormData } = useSendFormData();
   const [loginError, setLoginError] = useState(null);
 
+  // Hook for navigation and sending form data
+  const navigate = useNavigate();
+  const { loading, sendFormData } = useSendFormData();
+
+  /**
+   * Handle form submission for admin login.
+   * Prevents default form action, sends login data to the API,
+   * handles errors, and navigates to the admin page on success.
+   *
+   * @param {React.FormEvent} e - The form submission event.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
-    const {data, error } = await sendFormData("/api/v1/admin/login", {
+    const { data, error } = await sendFormData("/api/v1/admin/login", {
       adminEmail: email,
-      adminPassword: password
+      adminPassword: password,
     });
 
-    console.log("data =>",data);
+    console.log("data =>", data);
 
- 
-    if(error) {
-      setLoginError(error)
+    if (error) {
+      setLoginError(error);
       return;
     }
 
-
-    if(data?.success) {
+    if (data?.success) {
       localStorage.setItem("eventAdmin", true);
-      
       navigate("/admin");
     }
-
   };
 
+  /**
+   * Handle click event to navigate to the registration page.
+   */
   const handleClick = () => {
     localStorage.setItem("eventAdmin", true);
     navigate("/AdminSignup");
   };
 
+  // Clear any stored admin state on component mount
   useEffect(() => {
     localStorage.removeItem("eventAdmin");
   }, []);
@@ -52,7 +60,11 @@ function AdminLogin() {
       <div className="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded shadow-md">
         <h2 className="text-2xl font-bold text-center text-white">Admin Login</h2>
 
-        <p> {loginError &&  <span className="text-red-500">{loginError} </span> }</p>
+        {loginError && (
+          <p className="text-center">
+            <span className="text-red-500">{loginError}</span>
+          </p>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -90,11 +102,9 @@ function AdminLogin() {
             Login
           </button>
         </form>
+
         <div className="text-center">
-          <button 
-            onClick={handleClick}
-            className="text-blue-400 hover:underline"
-          >
+          <button onClick={handleClick} className="text-blue-400 hover:underline">
             Register here
           </button>
         </div>
