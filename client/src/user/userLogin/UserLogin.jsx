@@ -2,22 +2,22 @@
 import React from 'react';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useSendFormData from "./../../Hooks/useReactApi/useReactApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { setUserData } from "../../Redux/UserReducer/UserReducer";
+import useReactApi from "../../hooks/useReactApi/useReactApi";
+// import { setUserData } from "../../Redux/UserReducer/UserReducer";
 
 const UserLogin = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { loading, sendFormData } = useSendFormData();
+  const { loading, sendFormData } = useReactApi();
   const { loginWithPopup, isAuthenticated, getIdTokenClaims, user } = useAuth0();
   const [loginError, setLoginError] = useState("");
   const navigate = useNavigate();
 
-  // Handle Google login
+  
   const handleGoogleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -33,9 +33,6 @@ const UserLogin = () => {
           email: response.email,
           email_verified: response.email_verified,
         };
-
-
-        
         const { data, error } = await sendFormData("/api/v1/user/google-login", googleData);
         dispatch(setUserData(data?.data?.user));
 
@@ -56,7 +53,9 @@ const UserLogin = () => {
       console.error("Error during Google login:", error);
     }
   };
-  // Handle form login
+
+
+  // // Handle form login
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -74,7 +73,7 @@ const UserLogin = () => {
       toast.success(success);
       localStorage.setItem("eventUser",true);
       localStorage.setItem("user", true);
-      dispatch(setUserData(data?.data));
+      // dispatch(setUserData(data?.data));
       navigate("/");
     } 
     catch (error) {
