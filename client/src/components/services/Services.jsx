@@ -54,12 +54,9 @@ const Services = () => {
   
         
   
-          <div className="bg-white rounded-lg shadow-lg w-80 p-5">
-            <img
-              src="https://www.cvent.com/sites/default/files/styles/max_560w/public/image/2023-03/Cvent%20Studio.png?itok=n4xzdiPr"
-              alt="Screenshot of Cvent Studio interface"
-              className="w-full rounded-lg"
-            />
+          <div className="bg-white rounded-lg shadow-lg w-full p-5 m-20">
+          <img src="/image1.jpg" alt="Description" className="w-64 h-64 object-cover" />
+
             <h2 className="text-lg font-bold text-gray-800 mt-4">
             MyWebsite Studio<sup>™</sup>
             </h2>
@@ -74,9 +71,30 @@ const Services = () => {
             </a>
           </div>
   
-          <div className="bg-white rounded-lg shadow-lg w- p-5">
+          <div className="bg-white rounded-lg shadow-lg w-full p-5 m-20">
             <img
-              src="https://thumbs.dreamstime.com/b/event-management-concept-meeting-white-office-table-93231489.jpg"
+              src="/image2.jpg"
+              alt="Screenshot of Event Management interface"
+              className="w-full rounded-lg"
+            />
+            <h2 className="text-lg font-bold text-gray-800 mt-4">
+              Standup Shows<sup>™</sup>
+            </h2>
+            <p className="text-gray-700 mt-2">
+              Manage your event from start to finish in one place
+            </p>
+            <a
+              href="#"
+              className="text-blue-500 hover:underline flex items-center mt-3"
+            >
+              Manage it all in one place{" "}
+              <i className="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-lg w-full p-5 m-20">
+            <img
+              src="/image3.jpg"
               alt="Screenshot of Event Management interface"
               className="w-full rounded-lg"
             />
@@ -94,6 +112,71 @@ const Services = () => {
               <i className="fas fa-arrow-right ml-2"></i>
             </a>
           </div>
+
+          <div className="bg-white rounded-lg shadow-lg w-full p-5 m-20">
+            <img
+              src="/image4.jpg"
+              alt="Screenshot of Event Management interface"
+              className="w-full rounded-lg"
+            />
+            <h2 className="text-lg font-bold text-gray-800 mt-4">
+              Event Management<sup>™</sup>
+            </h2>
+            <p className="text-gray-700 mt-2">
+              Manage your event from start to finish in one place
+            </p>
+            <a
+              href="#"
+              className="text-blue-500 hover:underline flex items-center mt-3"
+            >
+              Manage it all in one place{" "}
+              <i className="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-lg w-full p-5 m-20">
+            <img
+              src="/image5.jpg"
+              alt="Screenshot of Event Management interface"
+              className="w-full rounded-lg"
+            />
+            <h2 className="text-lg font-bold text-gray-800 mt-4">
+              Event Management<sup>™</sup>
+            </h2>
+            <p className="text-gray-700 mt-2">
+              Manage your event from start to finish in one place
+            </p>
+            <a
+              href="#"
+              className="text-blue-500 hover:underline flex items-center mt-3"
+            >
+              Manage it all in one place{" "}
+              <i className="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-lg w-full p-5 m-20">
+            <img
+              src="/image6.jpg"
+              alt="Screenshot of Event Management interface"
+              className="w-full rounded-lg"
+            />
+            <h2 className="text-lg font-bold text-gray-800 mt-4">
+              Event Management<sup>™</sup>
+            </h2>
+            <p className="text-gray-700 mt-2">
+              Manage your event from start to finish in one place
+            </p>
+            <a
+              href="#"
+              className="text-blue-500 hover:underline flex items-center mt-3"
+            >
+              Manage it all in one place{" "}
+              <i className="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+
+          
        
         </div>
         <div className="mt-10">
