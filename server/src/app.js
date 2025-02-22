@@ -2,10 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mainRouter from './mainRouter.js';
-
+const app = express();
 dotenv.config();
 
-const app = express();
+import morgan from 'morgan';
+app.use(morgan('dev'));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

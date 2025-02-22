@@ -3,9 +3,9 @@ import mongoose from 'mongoose';
 
 const mongoConnection = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/hackthon', {
-    //   useNewUrlParser: true,
-    //   useUnifiedTopology: true,
+    await mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/hackthon", {
+      // useNewUrlParser: true,
+      // useUnifiedTopology: true,
     });
     console.log('MongoDB Connected');
   } catch (err) {
