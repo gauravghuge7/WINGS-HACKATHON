@@ -3,12 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { toast, ToastContainer } from "react-toastify";
 import useSendFormData from './../../Hooks/useSendFormData/useSendFormData';
-import CurrentEventDetail from './../../Admin/Events/CurrentEventDetail';
-import CurrentEventDashboard from './../../Admin/Events/CurrentEventDashboard';
+import CurrentEventDashboard from './CurrentEventDashboard';
+import CurrentEventDetail from './CurrentEventDetails';
+
 
 const UserDashboard = () => {
     const { eventId } = useParams(); // Get eventId from URL params
     const [event, setEvent] = useState(null);
+    const [userDashboard, setUserDashboard] = useState(null);
     const { loading, fetchData } = useSendFormData();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('details'); // Default to 'details' tab
@@ -16,7 +18,7 @@ const UserDashboard = () => {
     // Fetch event details from API
     const fetchEventDetails = async () => {
         try {
-            const { data, error } = await fetchData(`/api/v1/user/profile/getUserDashboard/${eventId}`);
+            const { data, error } = await fetchData(`/api/v1/user/profile/getUserDashboard`);
 
             if (error) {
                 console.log(error);
@@ -25,7 +27,10 @@ const UserDashboard = () => {
             }
 
             toast.success("Event details fetched successfully");
-            setEvent(data.data);
+
+            // Set event and userDashboard data
+            setEvent(data.events.find((e) => e._id === eventId)); // Find the specific event by eventId
+            setUserDashboard(data.userDashboard);
         } catch (err) {
             console.log(err);
             toast.error("Failed to fetch event details");
@@ -43,8 +48,8 @@ const UserDashboard = () => {
     }
 
     // Render error state
-    if (!event) {
-        return <div className="text-center py-8">No event found.</div>;
+    if (!event || !userDashboard) {
+        return <div className="text-center py-8">No event or user data found.</div>;
     }
 
     return (
@@ -62,8 +67,18 @@ const UserDashboard = () => {
                 {/* Main Content */}
                 <div className="flex-1"> {/* flex-1 allows this div to take up remaining space */}
                     {/* Render the active tab */}
-                    {activeTab === 'details' && <CurrentEventDetail event={event} />}
-                    {activeTab === 'dashboard' && <CurrentEventDashboard event={event} />}
+                    {activeTab === 'details' && (
+                        <CurrentEventDetail
+                            event={event}
+                            userDashboard={userDashboard}
+                        />
+                    )}
+                    {activeTab === 'dashboard' && (
+                        <CurrentEventDashboard
+                            event={event}
+                            userDashboard={userDashboard}
+                        />
+                    )}
                 </div>
 
                 {/* Sidebar on the Right */}

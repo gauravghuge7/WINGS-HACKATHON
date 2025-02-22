@@ -1,20 +1,30 @@
-FROM node:20-slim
+# Stage 1: Build Vite React App
+FROM node:20-slim AS builder
+
+# Install necessary packages
+RUN apt-get update && apt-get install -y python3 make g++
 
 # Set working directory
 WORKDIR /app
 
-# Copy package files and install all dependencies
+# Copy package.json and install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy all source files
+# Copy the rest of the application code
 COPY . .
 
-# Add local node_modules binaries to PATH
-ENV PATH ./node_modules/.bin:$PATH
+# Build the Vite app for production
+RUN npm run build
 
-# Expose Vite development port
-EXPOSE 5173
+# Stage 2: Serve using Nginx
+FROM nginx:alpine
 
-# Run the development server
-CMD ["npm", "run", "dev"]
+# Copy build output to Nginx html directory
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Expose port 80 for Render
+EXPOSE 80
+
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]
