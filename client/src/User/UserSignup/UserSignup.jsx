@@ -57,13 +57,16 @@ const UserSignup = () => {
     };
 
     try {
-      const { data, error, success } = await sendFormData("/api/v1/user/signup", { userData: formSendData });
-   
+      const { data, error, success } = await sendFormData(
+        "/api/v1/user/signup",
+        { userData: formSendData }
+      );
+
       if (error) {
         toast.error(error);
         return;
       }
-      
+
       toast.success(success);
       setFormData({
         firstName: "",
@@ -73,7 +76,6 @@ const UserSignup = () => {
         confirmPassword: "",
       });
       navigate("/userLogin");
- 
     } catch (error) {
       console.log("error => ", error);
     }
@@ -102,8 +104,11 @@ const UserSignup = () => {
           token: response.token,
         };
 
-        const { data, error, success } = await sendFormData("/api/v1/user/google-signup", googleData);
-       
+        const { data, error, success } = await sendFormData(
+          "/api/v1/user/google-signup",
+          googleData
+        );
+
         if (error) {
           toast.error(error);
           return;
@@ -125,19 +130,23 @@ const UserSignup = () => {
       }}
     >
       {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-black opacity-40 w-10"></div>
+      <div className="absolute inset-0 bg-black opacity-40"></div>
       <ToastContainer />
       <div
         ref={formRef}
-        className="relative max-w-6xl w-full bg-white bg-opacity-40 backdrop-filter backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden flex flex-col lg:flex-row"
+        className="relative max-w-md w-full bg-white bg-opacity-40 backdrop-filter backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden flex flex-col mx-auto z-10"
       >
-        {/* Left Section: Signup Form */}
-        <div className="w-50 lg:w-1/2 p-10">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">Create an Account</h2>
+        {/* Signup Form Section */}
+        <div className="w-full p-10">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+            Create an Account
+          </h2>
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  First Name
+                </label>
                 <input
                   type="text"
                   name="firstName"
@@ -148,7 +157,9 @@ const UserSignup = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Last Name
+                </label>
                 <input
                   type="text"
                   name="lastName"
@@ -160,7 +171,9 @@ const UserSignup = () => {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email
+              </label>
               <input
                 type="email"
                 name="email"
@@ -171,7 +184,9 @@ const UserSignup = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
               <input
                 type="password"
                 name="password"
@@ -182,7 +197,9 @@ const UserSignup = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Confirm Password
+              </label>
               <input
                 type="password"
                 name="confirmPassword"
