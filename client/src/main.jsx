@@ -9,7 +9,8 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import axios from 'axios'
-
+import { Provider } from 'react-redux'
+import store from './redux/store/store.js'
 
 
 
@@ -21,8 +22,10 @@ axios.defaults.proxy = true;
 
 createRoot(document.getElementById('root')).render(
   
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
   
 )

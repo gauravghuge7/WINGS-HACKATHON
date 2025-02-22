@@ -5,6 +5,8 @@ import { Routes, Route } from 'react-router-dom'
 import UserTemplate from './UserTemplate'
 import UserProtection from './UserProtection';
 
+import Landing from '../../home/landing/Landing';
+
 
 
 
@@ -15,7 +17,11 @@ const UserRouter = () => {
 
                   <Route path='/' element={<UserTemplate />}>
                   
-                  
+
+                        {/*   Public Routes for landing page */}
+
+                        <Route index element={<Landing />} />
+
 
 
 

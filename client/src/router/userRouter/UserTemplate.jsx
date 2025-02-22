@@ -1,12 +1,12 @@
-
-import React from 'react'
+import React from 'react';
 import { Outlet } from 'react-router-dom'
+import ProfessionalHeader from '../../home/homeNavbar/HomeNavbar';
 
 function UserTemplate() {
   return (
     <div>
       <header>
-
+        <ProfessionalHeader />
       </header>
 
       <main>

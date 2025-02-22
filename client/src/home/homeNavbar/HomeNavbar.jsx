@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import NotificationPrompt from "../../Router/UserRouter/HomeTemplate/HandleEnableNotification";
+// import NotificationPrompt from "../../Router/UserRouter/HomeTemplate/HandleEnableNotification";
 
 const ProfessionalHeader = React.memo( () => {
   const [visible, setVisible] = useState(true);
@@ -96,9 +96,9 @@ const ProfessionalHeader = React.memo( () => {
           ))}
         </nav>
 
-        <section className="flex items-center justify-center">
+        {/* <section className="flex items-center justify-center">
           <NotificationPrompt />
-        </section>
+        </section> */}
 
         {isLoggedIn && user?.userEmail ? (
           <button

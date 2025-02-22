@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css'
 import { Route, Routes } from 'react-router-dom';
+import UserRouter from './router/userRouter/UserRouter';
+import AdminRouter from './router/adminRouter/AdminRouter';
 
 function App() {
   
@@ -12,10 +14,10 @@ function App() {
 
         <Route>
           
-          <Route path='admin/*' element={<h1>Admin</h1>} />
+          <Route path='admin/*' element={<AdminRouter />} />
 
 
-          <Route path='/*' element={<h1>Admin</h1>} />
+          <Route path='/*' element={ <UserRouter /> } />
 
 
 
