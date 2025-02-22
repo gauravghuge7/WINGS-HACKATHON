@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-
 const LandingPage = () => {
   const features = [
     {
@@ -45,7 +44,6 @@ const LandingPage = () => {
     { value: "200+", label: "Global Enterprises" },
     { value: "24/7", label: "Support Coverage" },
   ];
-
   const ref = useRef();
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
