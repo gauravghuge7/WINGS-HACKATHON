@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css'
 import { Route, Routes } from 'react-router-dom';
+import UserRouter from './router/userRouter/UserRouter';
 
 function App() {
   
@@ -15,7 +16,7 @@ function App() {
           <Route path='admin/*' element={<h1>Admin</h1>} />
 
 
-          <Route path='/*' element={<h1>Admin</h1>} />
+          <Route path='/*' element={ <UserRouter /> } />
 
 
 
