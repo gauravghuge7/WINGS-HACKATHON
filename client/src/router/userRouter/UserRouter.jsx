@@ -9,6 +9,7 @@ import UserLogin from '../../user/Userlogin/Userlogin';
 import CreateEvent from '../../user/CreateEvent/CreateEvent';
 const NotFound = React.lazy(() => import('../../components/notfound/NotFound'));
 const Landing = React.lazy(() => import('../../home/landing/Landing'));
+import ContactUs from './../../components/contactus/ContactUs';
 
 
 
@@ -24,6 +25,7 @@ const UserRouter = () => {
                         <Route index element={<Landing />} />
 
                         {/*    user login components */}
+
                         <Route index element={<Landing />} />
                         <Route path='../' element={<UserLogin />} />
                         <Route path='userlogin' element={<UserLogin />} />
