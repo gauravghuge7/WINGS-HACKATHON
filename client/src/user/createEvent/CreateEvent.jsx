@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 // import ReactQuill from "react-quill";
 import gsap from "gsap";
 // import "react-quill/dist/quill.snow.css";
-import useSendFormData from "../../Hooks/useReactApi/useReactApi";
+import useSendFormData from "../../hooks/useReactApi/useReactApi";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -196,9 +196,6 @@ const EventForm = () => {
                 </div>
                 <div className="mt-4">
                     <label className="font-bold">Event Description</label>
-                    {/* <ReactQuill value={eventDescription} onChange={seteventDescription} className="bg-white border rounded-md" /> */}
-
-
                      {aiSuggestions && (
   <div className="mt-4 bg-gray-900 p-4 rounded-lg border-l-4 border-blue-500 shadow-lg">
     <p className="italic text-gray-300 opacity-80 animate-typing whitespace-pre-line break-words">
