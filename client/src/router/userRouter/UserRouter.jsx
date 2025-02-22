@@ -26,8 +26,8 @@ const UserRouter = () => {
 
                         {/*    user login components */}
 
-                        <Route index element={<Landing />} />
-                        <Route path='../' element={<UserLogin />} />
+                        <Route path='/user/login' element={<UserLogin />} />
+                        <Route path='/user/signup' element={<UserLogin />} />
 
                         <Route path='/contact' element={<ContactUs />} />
                         <Route path='/latestEvents' element={<ContactUs />} />
@@ -40,7 +40,7 @@ const UserRouter = () => {
 
 
                           {/*   Protected Routes by Gaurav Ghuge */}
-                        <Route path='../../user/Userlogin/Userlogin*' element={<UserProtection />}>
+                        <Route path='' element={<UserProtection />}>
                         
 
 
