@@ -6,6 +6,7 @@ import ApiResponse from "../../utils/apiResponse.js";
 import asyncHandler  from "../../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 
+
 const cookieOptions = {
     maxAge: 1000 * 60 * 60 * 24 * 7,
     httpOnly: true,
@@ -14,9 +15,10 @@ const cookieOptions = {
 };
 
 const register = asyncHandler(async (req, res, next) => {
+
     try {
         const { userEmail, userPassword, userFirstName, userLastName } = req.body;
-        
+
         const userData = {
             userEmail,
             userPassword,
@@ -24,7 +26,7 @@ const register = asyncHandler(async (req, res, next) => {
             userLastName
         };
 
-        console.log("data => ", userData);
+        // console.log("data => ", userData);
 
         emptyFieldValidator(userData.userEmail, userData.userPassword, userData.userFirstName, userData.userLastName);
     
@@ -85,6 +87,8 @@ const register = asyncHandler(async (req, res, next) => {
 
 const login = asyncHandler(async (req, res, next) => {
     const { userEmail, userPassword } = req.body;
+
+    console.log("userEmail => ", userEmail);
 
     const userData = {
         userEmail,

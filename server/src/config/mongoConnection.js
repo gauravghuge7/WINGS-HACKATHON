@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 const mongoConnection = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect("mongodb://localhost:27017/hackthon");
     console.log('MongoDB Connected');
   } 
   catch (err) {
