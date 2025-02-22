@@ -1,15 +1,17 @@
-
 FROM node:20-alpine
 
+# Set working directory
 WORKDIR /app
 
+# Copy package files and install dependencies
 COPY package*.json ./
+RUN npm install --production
 
-RUN npm install
-
+# Copy all source files
 COPY . .
 
-EXPOSE 5173 
+# Expose the development port
+EXPOSE 5173
 
-
+# Run the development server
 CMD ["npm", "run", "dev"]
