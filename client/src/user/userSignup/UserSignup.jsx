@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import useSendFormData from "../../Hooks/useSendFormData/useSendFormData";
+
 import { ToastContainer, toast } from "react-toastify";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from 'react-router-dom';
+import useReactApi from "../../hooks/useReactApi/useReactApi";
 
 const UserSignup = () => {
   // State for form fields
@@ -17,7 +18,7 @@ const UserSignup = () => {
 
   const navigate = useNavigate();
   const { loginWithPopup, isAuthenticated, getIdTokenClaims, user } = useAuth0();
-  const {  loading, sendFormData } = useSendFormData();
+  const {  loading, sendFormData } = useReactApi();
 
   // Handle input change
   const handleChange = (e) => {
@@ -42,7 +43,10 @@ const UserSignup = () => {
     };
 
     try {
-      const {data, error, success} = await sendFormData("http://localhost:3000/api/v1/user/register", { userData: formSendData });
+
+      console.log("formSendData => ", formSendData);
+
+      const {data, error, success} = await sendFormData("/api/v1/user/register", { userData: formSendData });
    
       if (error) {
         toast.error(error);
@@ -57,7 +61,7 @@ const UserSignup = () => {
         password: "",
         confirmPassword: "",
       });
-      navigate("/userLogin");
+      navigate("/user/login");  
  
     } 
     catch (error) {
@@ -88,7 +92,7 @@ const UserSignup = () => {
           token: response.token,
         };
 
-        const {data, error, success} = await sendFormData("/api/v1/user/google-signup", googleData);
+        const {data, error, success} = await sendFormData("/api/v1/user/signupUsingGoogle", googleData);
        
         if (error) {
           toast.error(error);
@@ -96,7 +100,7 @@ const UserSignup = () => {
         }
 
         toast.success(success);
-        navigate("/userLogin");
+        navigate("/user/login");
 
       }
     } catch (error) {

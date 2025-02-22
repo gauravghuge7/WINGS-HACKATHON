@@ -3,13 +3,12 @@ import mongoose from 'mongoose';
 
 const mongoConnection = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/hackthon", {
-      // useNewUrlParser: true,
-      // useUnifiedTopology: true,
-    });
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log('MongoDB Connected');
-  } catch (err) {
+  } 
+  catch (err) {
     console.log(err);
+    process.exit(1);
   }
 };
 
