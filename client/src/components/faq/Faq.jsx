@@ -38,7 +38,7 @@ const FAQPage = () => {
     
     const [openIndex, setOpenIndex] = useState(null);
 
-    
+
     const toggleFAQ = (index) => {
         setOpenIndex(openIndex === index ? null : index);
     };
