@@ -1,4 +1,5 @@
-import React from "react";  
+import React from "react";
+
 const ContactUs = () => {
   return (
     <div className="min-h-screen bg-gray-100">

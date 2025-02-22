@@ -1,5 +1,3 @@
-
-
 import React from 'react'
 
 import { createRoot } from 'react-dom/client'
@@ -24,7 +22,7 @@ createRoot(document.getElementById('root')).render(
     domain="dev-rzrow7mfr07o2mr2.us.auth0.com"
     clientId="v5iHwgbIZwV1GdeZk8zu7c5dMAYuhHRB"
     authorizationParams={{
-    redirect_uri: window.location.origin
+      redirect_uri: window.location.origin
     }}
   >
 

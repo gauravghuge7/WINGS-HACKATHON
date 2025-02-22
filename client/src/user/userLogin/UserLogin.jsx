@@ -1,56 +1,60 @@
+/* eslint-disable no-unused-vars */
+import React from 'react';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import useSendFormData from "./../../Hooks/useSendFormData/useSendFormData";
-// import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
+import useReactApi from "../../hooks/useReactApi/useReactApi";
 // import { setUserData } from "../../Redux/UserReducer/UserReducer";
 
 const UserLogin = () => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const { loading, sendFormData } = useSendFormData();
-  // const { loginWithPopup, isAuthenticated, getIdTokenClaims, user } = useAuth0();
+  const { loading, sendFormData } = useReactApi();
+  const { loginWithPopup, isAuthenticated, getIdTokenClaims, user } = useAuth0();
   const [loginError, setLoginError] = useState("");
   const navigate = useNavigate();
 
-  // Handle Google login
-  // const handleGoogleLogin = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     await loginWithPopup({
-  //       screen_hint: "signup",
-  //       connection: "google-oauth2",
-  //     });
+  
+  const handleGoogleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await loginWithPopup({
+        screen_hint: "signup",
+        connection: "google-oauth2",
+      });
 
-  //     const response = await getIdTokenClaims();
+      const response = await getIdTokenClaims();
 
-  //     if (response && response.email) {
-  //       const googleData = {
-  //         email: response.email,
-  //         email_verified: response.email_verified,
-  //       };
-  //       const { data, error } = await sendFormData("/api/v1/user/google-login", googleData);
-  //       dispatch(setUserData(data?.data?.user));
+      if (response && response.email) {
+        const googleData = {
+          email: response.email,
+          email_verified: response.email_verified,
+        };
+        const { data, error } = await sendFormData("/api/v1/user/google-login", googleData);
+        dispatch(setUserData(data?.data?.user));
 
-  //       if (error) {
-  //         setLoginError(error);
-  //         toast.error(error);
-  //         return;
-  //       }
-  //       console.log(data);
-  //       toast.success(data?.message);
-  //       localStorage.setItem("eventUser", true);
-  //       localStorage.setItem("user", true);
-  //       dispatch(setUserData(data?.data?.user));
-  //       navigate("/");
-  //     }
-  //   } 
-  //   catch (error) {
-  //     console.error("Error during Google login:", error);
-  //   }
-  // };
+        if (error) {
+          setLoginError(error);
+          toast.error(error);
+          return;
+        }
+        console.log(data);
+        toast.success(data?.message);
+        localStorage.setItem("eventUser", true);
+        localStorage.setItem("user", true);
+        dispatch(setUserData(data?.data?.user));
+        navigate("/");
+      }
+    } 
+    catch (error) {
+      console.error("Error during Google login:", error);
+    }
+  };
+
+
   // // Handle form login
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -69,7 +73,7 @@ const UserLogin = () => {
       toast.success(success);
       localStorage.setItem("eventUser", true);
       localStorage.setItem("user", true);
-      //dispatch(setUserData(data?.data));
+      // dispatch(setUserData(data?.data));
       navigate("/");
     } 
     catch (error) {
