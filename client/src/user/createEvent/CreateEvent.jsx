@@ -1,10 +1,11 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { useState, useEffect } from "react";
 // import ReactQuill from "react-quill";
 import gsap from "gsap";
 // import "react-quill/dist/quill.snow.css";
-// import useSendFormData from "../../Hooks/useSendFormData/useSendFormData";
+import useSendFormData from "../../Hooks/useReactApi/useReactApi";
 import { ToastContainer, toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -31,9 +32,9 @@ const EventForm = () => {
 
     const userData = JSON.parse(localStorage?.getItem('data') || {});
     const [eventDescription, seteventDescription] = useState("");
-    //   const { sendFormData, error } = useSendFormData();
-    //   const [aiSuggestions, setAiSuggestions] = useState(null);
-    //   const [loading, setLoading] = useState(false);
+      const { sendFormData, error } = useSendFormData();
+      const [aiSuggestions, setAiSuggestions] = useState(null);
+      const [loading, setLoading] = useState(false);
     const user = useSelector((state) => state?.UserReducer?.userData);
     const navigate = useNavigate();
 
@@ -68,19 +69,19 @@ const EventForm = () => {
         formData.eventOrganiser = userData?._id;
         formData.eventCustomFormData = fields;
 
-        // try {
-        // //   let res = await sendFormData("http://localhost:5000/api/v1/event/create", formData);
-        //   if(res?.data?.statusCode == 200) { 
-        //     toast.success("Event created successfully");
-        //     navigate("/latestEvents"); 
-        //   } else {
-        //      console.log(res?.error);
-        //      toast.error(res?.error);
-        //   }
-        // } catch (err) {
-        //   toast.error(err.message);
-        //   console.log(err.message);
-        // }
+        try {
+          let res = await sendFormData("http://localhost:5000/api/v1/event/create", formData);
+          if(res?.data?.statusCode == 200) { 
+            toast.success("Event created successfully");
+            navigate("/latestEvents"); 
+          } else {
+             console.log(res?.error);
+             toast.error(res?.error);
+          }
+        } catch (err) {
+          toast.error(err.message);
+          console.log(err.message);
+        }
     };
 
 
@@ -198,25 +199,25 @@ const EventForm = () => {
                     {/* <ReactQuill value={eventDescription} onChange={seteventDescription} className="bg-white border rounded-md" /> */}
 
 
-                    {/* {aiSuggestions && (
-//   <div className="mt-4 bg-gray-900 p-4 rounded-lg border-l-4 border-blue-500 shadow-lg">
-//     <p className="italic text-gray-300 opacity-80 animate-typing whitespace-pre-line break-words">
-//       {aiSuggestions}
-//     </p>
-//     <div className="mt-3 flex gap-3">
-//       <button 
-//         onClick={handleImplement} 
-//         className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-md transition duration-300 shadow-md">
-//         Use
-//       </button>
-//       <button 
-//         onClick={() => setAiSuggestions(null)} 
-//         className="bg-gray-700 hover:bg-gray-800 text-white font-semibold py-2 px-5 rounded-md transition duration-300 shadow-md">
-//         Ignore
-//       </button>
-//     </div>
-// </div>
-)} */}
+                     {aiSuggestions && (
+  <div className="mt-4 bg-gray-900 p-4 rounded-lg border-l-4 border-blue-500 shadow-lg">
+    <p className="italic text-gray-300 opacity-80 animate-typing whitespace-pre-line break-words">
+      {aiSuggestions}
+    </p>
+    <div className="mt-3 flex gap-3">
+      <button 
+        onClick={handleImplement} 
+        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-md transition duration-300 shadow-md">
+        Use
+      </button>
+      <button 
+        onClick={() => setAiSuggestions(null)} 
+        className="bg-gray-700 hover:bg-gray-800 text-white font-semibold py-2 px-5 rounded-md transition duration-300 shadow-md">
+        Ignore
+      </button>
+    </div>
+</div>
+)} 
                 </div>
             </form>
             <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
