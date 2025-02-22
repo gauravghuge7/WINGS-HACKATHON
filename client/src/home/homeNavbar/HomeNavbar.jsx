@@ -49,11 +49,11 @@ const ProfessionalHeader = React.memo( () => {
   const navLinks = useMemo(
     () => [
       { name: "Home", to: "/" },
-      { name: "Services", to: "/eventmarketer" },
+      { name: "Services", to: "/services" },
       { name: "Contact", to: "/contact" },
       { name: "Create Event", to: "/user/CreateEvent" },
       { name: "Latest Events", to: "/latestEvents" },
-      { name: "Docs", to: "/documentation" },
+
     ],
     []
   );

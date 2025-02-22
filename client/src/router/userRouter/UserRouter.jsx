@@ -24,7 +24,9 @@ const UserRouter = () => {
                         <Route index element={<Landing />} />
 
                         {/*    user login components */}
-                        <Route path='contact' element={<ContactUs />} />
+                        <Route path='/contact' element={<ContactUs />} />
+                        <Route path='/latestEvents' element={<ContactUs />} />
+                        <Route path='/services' element={<ContactUs />} />
                         
 
 
