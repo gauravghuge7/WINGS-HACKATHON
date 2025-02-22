@@ -1,16 +1,14 @@
-import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import useSendFormData from "../../Hooks/useSendFormData/useSendFormData";
 import { ToastContainer } from "react-toastify";
-import useReactApi from "../../hooks/useReactApi/useReactApi";
 
 function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const { loading, sendFormData } = useReactApi();
+  const { loading, sendFormData } = useSendFormData();
   const [loginError, setLoginError] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -41,7 +39,7 @@ function AdminLogin() {
 
   const handleClick = () => {
     localStorage.setItem("eventAdmin", true);
-    navigate("/admin/AdminSignup");
+    navigate("/AdminSignup");
   };
 
   useEffect(() => {

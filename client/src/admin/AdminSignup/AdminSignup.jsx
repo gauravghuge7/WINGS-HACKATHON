@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-
+import axios from "axios";
+import useSendFormData from './../../Hooks/useSendFormData/useSendFormData';
 import { toast, ToastContainer } from "react-toastify";
 import { Link,  useNavigate } from "react-router-dom";
-import useReactApi from "../../hooks/useReactApi/useReactApi";
 
 const AdminSignup = () => {
 
@@ -14,7 +14,7 @@ const AdminSignup = () => {
   });
 
   const navigate = useNavigate();
-  const { isLoading, sendFormData } = useReactApi();
+  const { isLoading, sendFormData } = useSendFormData();
   const [signupError, setSignupError] = useState(null);
 
   const handleChange = (e) => {
@@ -31,7 +31,7 @@ const AdminSignup = () => {
     }
 
     try {
-      const {data, error, success } = await sendFormData("/api/v1/admin/register", formData);
+      const {data, error, success } = await sendFormData("/api/v1/admin/signup", formData);
 
       if(error) {
         setSignupError(error)

@@ -15,16 +15,14 @@ import {
   Line,
 } from "recharts";
 import { useSelector } from "react-redux";
-
-import useReactApi from "../../hooks/useReactApi/useReactApi";
-import { toast } from 'react-toastify';
+import useSendFormData from './../../Hooks/useSendFormData/useSendFormData';
 
 export default function EventDashboard() {
 
   const [redux_events, setRedux_events] = useState([]);
 
 
-  const { fetchData, loading } = useReactApi();
+  const { fetchData, loading } = useSendFormData();
 
 
   const fetchEvents = async () => {

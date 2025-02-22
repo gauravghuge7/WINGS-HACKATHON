@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {  ArrowLeft, Lock, Unlock } from "lucide-react";
-
+import useSendFormData from "../../Hooks/useSendFormData/useSendFormData";
 import { toast, ToastContainer } from "react-toastify";
 import CurrentEventDetail from "./CurrentEventDetail";
 import CurrentEventDashboard from './CurrentEventDashboard';
-import useReactApi from "../../hooks/useReactApi/useReactApi";
 
 const ViewEventDetails = () => {
       const { eventId } = useParams(); // Get eventId from URL params
       const [event, setEvent] = useState(null);
-      const { loading, fetchData, sendFormData } = useReactApi();
+      const { loading, fetchData, sendFormData } = useSendFormData();
       const navigate = useNavigate();
       const [activeTab, setActiveTab] = useState('details'); // Default to 'details' tab
 

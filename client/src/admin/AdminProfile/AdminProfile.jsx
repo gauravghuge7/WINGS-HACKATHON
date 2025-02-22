@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-
+import useSendFormData from "../../Hooks/useSendFormData/useSendFormData";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import useReactApi from "../../hooks/useReactApi/useReactApi";
 
 const AdminProfile = () => {
-  const { loading, fetchData, updateDataUsingPut, sendFormData } = useReactApi();
+  const { loading, fetchData, updateDataUsingPut, sendFormData } = useSendFormData();
   const [isEditing, setIsEditing] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
 

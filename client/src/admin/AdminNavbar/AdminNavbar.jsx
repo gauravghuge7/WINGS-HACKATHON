@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-
+import useSendFormData from "../../Hooks/useSendFormData/useSendFormData";
 import { toast } from 'react-toastify';
-import useReactApi from "../../hooks/useReactApi/useReactApi";
 
 const AdminNavbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarRef = useRef(null);
   const [admin, setAdmin] = useState({});
-  const [error, setError] = useState(null);
 
-  const {  loading, fetchData } = useReactApi();
+  const {  loading, fetchData } = useSendFormData();
 
   const fetchAdmin = async () => {
     try {

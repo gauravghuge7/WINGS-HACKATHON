@@ -1,14 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { CalendarDays } from "lucide-react";
-
+import useSendFormData from "../../Hooks/useSendFormData/useSendFormData";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { setEvents } from "../../Redux/AdminReducer/AdminReducer";
-import useReactApi from './../../hooks/useReactApi/useReactApi';
 
 const ShowAllEvents = () => {
-  const { loading, fetchData } = useReactApi();
+  const { loading, fetchData } = useSendFormData();
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import useSendFormData from "../../Hooks/useSendFormData/useSendFormData";
 import { toast } from "react-toastify";
-import useReactApi from "../../hooks/useReactApi/useReactApi";
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 
 const UserDashboard = () => {
       
-      const { fetchData, loading } = useReactApi();
+      const { fetchData, loading } = useSendFormData();
       const [data, setData] = useState();
 
       // Mock API function to fetch user insights (replace with your actual API call)
