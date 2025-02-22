@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-
-import react,{ useState } from "react";
+import React from 'react';
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useSendFormData from "./../../Hooks/useReactApi/useReactApi";
 import { useAuth0 } from "@auth0/auth0-react";
