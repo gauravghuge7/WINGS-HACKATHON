@@ -1,6 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
+<<<<<<< HEAD
 
+=======
+import useSendFormData from "../../Hooks/useReactApi/useReactApi";
+>>>>>>> 1a1d3634dda2cdab991aeb239546f61efc92273a
 import { ToastContainer, toast } from "react-toastify";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from 'react-router-dom';
@@ -43,10 +47,14 @@ const UserSignup = () => {
     };
 
     try {
+<<<<<<< HEAD
 
       console.log("formSendData => ", formSendData);
 
       const {data, error, success} = await sendFormData("/api/v1/user/register", { userData: formSendData });
+=======
+      const {data, error, success} = await sendFormData("/api/v1/user/signup", { userData: formSendData });
+>>>>>>> 1a1d3634dda2cdab991aeb239546f61efc92273a
    
       if (error) {
         toast.error(error);

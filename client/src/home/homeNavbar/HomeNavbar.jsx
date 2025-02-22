@@ -64,7 +64,7 @@ const ProfessionalHeader = React.memo( () => {
       { name: "My Events", to: "/user/myEvents" },
       { name: "Bookmarked Events", to: "/user/event/bookmarked" },
       { name: "Liked Events", to: "/user/event/liked" },
-      { name: "Create A Event", to: "/user/createEvent" },
+      { name: "Create A Event", to: "/CreateEvent" },
       { name: "User Dashboard", to: "/user/userDashboard" },
       { name: "My Events ", to: "/user/userEvent" },
       { name: "Log Out", to: "#", onClick: handleLogout },
@@ -81,7 +81,7 @@ const ProfessionalHeader = React.memo( () => {
         style={{ height: "56px" }}
       >
         <Link to="/" className="text-xl font-semibold text-gray-900 tracking-wide">
-          MyWebsite ✨
+        Event Wallah ✨
         </Link>
 
         <nav className="hidden md:flex space-x-8">
