@@ -1,3 +1,13 @@
+
+import img1 from '../EventMarketer/image1.jpg';
+import img2 from '../EventMarketer/image2.jpg';
+import img3 from '../EventMarketer/image3.jpg';
+import img4 from '../EventMarketer/image4.jpg';
+import img5 from '../EventMarketer/image5.jpg';
+import img6 from '../EventMarketer/image6.jpg';
+
+
+
 const EventMarketers = () => {
   return (
     <div className="flex flex-col items-center bg-gray-100 p-6">
@@ -25,7 +35,7 @@ const EventMarketers = () => {
               {service.description}
             </p>
             
-            {/* Hover overlay */}
+           
             <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none">
               <p className="text-gray-700 text-center">{service.description}</p>
             </div>
@@ -53,25 +63,46 @@ const EventMarketers = () => {
 
 const services = [
   {
-    image: "https://play.vidyard.com/XeyyXjwfq5CKxcZPy28VXj.jpg",
+    image: img1,
     alt: "Screenshot of Attendee Hub interface",
     title: "MyWebsite Attendee Hub®",
     description: "Build engaging in-person, virtual, and hybrid events",
     linkText: "Build the perfect event"
   },
   {
-    image: "https://www.cvent.com/sites/default/files/styles/max_560w/public/image/2023-03/Cvent%20Studio.png?itok=n4xzdiPr",
-    alt: "Screenshot of Studio interface",
+    image: img2,
+    alt: "Screenshot of Registration interface",
     title: "MyWebsite Studio™",
     description: "Easily produce webinars, virtual content, and more",
     linkText: "Improve your video content"
   },
   {
-    image: "https://thumbs.dreamstime.com/b/event-management-concept-meeting-white-office-table-93231489.jpg",
+    image: img3,
     alt: "Screenshot of Event Management interface",
     title: "Event Management™",
     description: "Manage your event from start to finish in one place",
     linkText: "Manage it all in one place"
+  },
+  {
+    image: img4,
+    alt: "Screenshot of Registration interface",
+    title: "MyWebsite Studio™",
+    description: "Easily produce webinars, virtual content, and more",
+    linkText: "Improve your video content"
+  },
+  {
+    image: img5,
+    alt: "Screenshot of Registration interface",
+    title: "MyWebsite Studio™",
+    description: "Easily produce webinars, virtual content, and more",
+    linkText: "Improve your video content"
+  },
+  {
+    image: img6,
+    alt: "Screenshot of Registration interface",
+    title: "MyWebsite Studio™",
+    description: "Easily produce webinars, virtual content, and more",
+    linkText: "Improve your video content"
   }
 ];
 

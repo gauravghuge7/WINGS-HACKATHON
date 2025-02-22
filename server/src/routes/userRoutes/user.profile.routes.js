@@ -36,4 +36,7 @@ profileRouter.route("/updateUserProfilePhoto")
         updateUserProfilePhoto
     );
 
+
+    
+
 export default profileRouter;

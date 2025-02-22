@@ -38,8 +38,7 @@ const ShowSingleEvent = () => {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const submitRegistration = async (e) => {
-    e.preventDefault();
+  const submitRegistration = async () => {
 
     try {
       const payload = { userId: userData?._id, formData };
@@ -58,6 +57,25 @@ const ShowSingleEvent = () => {
     }
   };
 
+  const submitRegistrationOfForm = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const payload = { userId: userData?._id, formData };
+      const res = await axios.post(`http://localhost:5000/api/v1/user-event/register-for-event/${id}`, payload);
+      if (res.status === 200) {
+        toast.success("Registered successfully");
+        setRegistered(true);
+        setShowModal(false);
+        setFormData({});
+      } else {
+        toast.error("Error registering for event");
+      }
+    } catch (err) {
+      console.log("err => ", err?.response?.data);
+      toast.error(err?.response?.data?.message);
+    }
+  };
 
   const unregisterForEvent = async () => {
     try {
@@ -251,7 +269,7 @@ const ShowSingleEvent = () => {
 
             <div className="flex justify-between mt-4">
               <button type="button" className="px-4 py-2 bg-gray-400 text-white rounded-lg" onClick={() => setShowModal(false)}>Close</button>
-              <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded-lg" onClick={submitRegistration}>Submit</button>
+              <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded-lg" onClick={(e) => submitRegistrationOfForm(e)}>Submit</button>
             </div>
           </form>
         </div>

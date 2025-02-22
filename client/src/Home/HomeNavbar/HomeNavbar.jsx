@@ -121,6 +121,8 @@ const ProfessionalHeader = React.memo(() => {
           style={{ fontFamily: '"Pacifico", cursive' }}
         >
           Event WALLAH
+        <Link to="/" className="text-xl font-semibold text-gray-900 tracking-wide">
+          Event Wallah 
         </Link>
 
         <nav className="hidden md:flex space-x-8">

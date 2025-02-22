@@ -54,12 +54,19 @@ const UserLogin = () => {
         };
 
         const { data, error } = await sendFormData("/api/v1/user/google-login", googleData);
+
         if (error) {
           setLoginError(error);
           toast.error(error);
           return;
         }
+
         dispatch(setUserData(data?.data?.user));
+
+        dispatch(setUserData(data?.data?.user));
+        console.log(data);
+
+
         toast.success(data?.message);
         localStorage.setItem("eventUser", true);
         localStorage.setItem("user", true);
