@@ -1,175 +1,144 @@
-import { useEffect, useState } from "react";
-import useSendFormData from "../../Hooks/useSendFormData/useSendFormData";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import {  ArrowLeft, Lock, Unlock } from "lucide-react";
 
-function Userdashboard() {
-  const { loading, fetchData } = useSendFormData();
-  const [eventData, setEventData] = useState(null);
+import { toast, ToastContainer } from "react-toastify";
 
-  // Function to transform API data into the expected eventData structure
-  const transformData = (apiData) => {
-    const userEvents = apiData.userData[0].userEvents; // Get all user events
+import useSendFormData from './../../Hooks/useSendFormData/useSendFormData';
+import CurrentEventDetail from './../../Admin/Events/CurrentEventDetail';
+import CurrentEventDashboard from './../../Admin/Events/CurrentEventDashboard';
 
-    // Assuming we want to display the first event in the dashboard
-    const userEvent = userEvents[0];
+const UserDashboard = () => {
+      const { eventId } = useParams(); // Get eventId from URL params
+      const [event, setEvent] = useState(null);
+      const { loading, fetchData, sendFormData } = useSendFormData();
+      const navigate = useNavigate();
+      const [activeTab, setActiveTab] = useState('details'); // Default to 'details' tab
 
-    return {
-      eventName: userEvent.eventTitle,
-      activityCount: userEvent.eventRegistedUsers?.length || 0, // Number of registered users
-      upcomingCount: userEvents.filter(
-        (event) => new Date(event.eventDate) > new Date()
-      ).length, // Count of upcoming events
-      overdueCount: userEvents.filter(
-        (event) => new Date(event.eventDate) < new Date()
-      ).length, // Count of overdue events
-      waitingCount: userEvents.filter(
-        (event) => !event.eventRegistedUsers || event.eventRegistedUsers.length === 0
-      ).length, // Count of events with no registrations
-      tools: [
-        { name: "Tool 1", count: 3 }, // Example tools, replace with actual data
-        { name: "Tool 2", count: 5 },
-      ],
-      headcounts: {
-        estimated: userEvent.eventUserCapacity || 0, // Estimated headcount
-        actual: userEvent.eventRegistedUsers?.length || 0, // Actual headcount
-        minimum: 100, // Example value, replace with actual logic
-      },
-      tags: ["Tag 1", "Tag 2", "Tag 3"], // Example tags, replace with actual data
-      venue: {
-        name: userEvent.eventLocation || "No location specified",
-        address: "123 Example St, City, Country", // Example address, replace with actual data
-        time: userEvent.eventTime || "No time specified",
-      },
-    };
-  };
 
-  // Fetch and transform user data
-  const getUserData = async () => {
-    try {
-      const { data, error, success } = await fetchData("/api/v1/user/profile/getUserDashboard");
-      console.log("data => ", data);
-      console.log("error => ", error);
-      console.log("success => ", success);
+      // Fetch event details from API
+      const fetchEventDetails = async () => {
+            try {
+                  const { data, error, success } = await fetchData(`/api/v1/admin/events/viewEventDetails/${eventId}`);
 
-      if (error) {
-        console.log("error => ", error);
-        return;
+                  if (error) {
+                        console.log(error);
+                        toast.error(error);
+                        return;
+                  }
+
+                  toast.success(success);
+                  setEvent(data.data);
+            } catch (err) {
+                  console.log(err);
+            }
+      };
+
+      // Block/Unblock Event
+      const toggleBlockEvent = async () => {
+            try {
+                  const { data, error, success } = await sendFormData(`/api/v1/admin/block-event`, {
+                        eventId: eventId
+                  });
+
+                  if (error) {
+                        toast.error(error);
+                        return;
+                  }
+
+                  toast.success(success);
+                  fetchEventDetails();
+            } 
+            catch (err) {
+                  console.log(err);
+            }
+      };
+
+      const unblockEvent = async () => {
+            try {
+                  const { data, error, success } = await sendFormData(`/api/v1/admin/unblock-event`, {
+                        eventId: eventId
+                  });
+
+                  if (error) {
+                        toast.error(error);
+                        return;
+                  }
+
+                  toast.success(success);
+                  fetchEventDetails();
+            } 
+            catch (err) {
+                  console.log(err);
+            }
+      };
+
+      // Fetch event details on mount
+      useEffect(() => {
+            fetchEventDetails();
+      }, [eventId]);
+
+      // Render loading state
+      if (loading) {
+            return <div className="text-center py-8">Loading event details...</div>;
       }
 
-      // Transform the API data
-      const transformedData = transformData(data.data);
-      setEventData(transformedData);
-    } catch (error) {
-      console.log("error => ", error);
-    }
-  };
+      // Render error state
+      if (!event) {
+            return <div className="text-center py-8">No event found.</div>;
+      }
 
-  // Fetch data on component mount
-  useEffect(() => {
-    getUserData();
-  }, []);
+      return (
+            <> 
+                  {/* Back Button */}
+                  <button
+                        className="flex border ml-8 border-gray-300 items-center gap-2 text-gray-600  hover:text-gray-800 transition-colors duration-300 mb-6"
+                        onClick={() => navigate(-1)}
+                  >
+                  <ArrowLeft size={24} />
+                  <span>Back</span>
+                  </button>
+                  <div className="flex">
+      
+                        
+                  
 
-  // Loading state
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+                        {/* Main Content */}
+                        <div className="flex-1"> {/* flex-1 allows this div to take up remaining space */}
+                        {/* Render the active tab */}
+                        {activeTab === 'details' && <CurrentEventDetail event={event} />}
+                        {activeTab === 'dashboard' && <CurrentEventDashboard event={event} />}
+                        </div>
 
-  // No event data state
-  if (!eventData) {
-    return <div>No event data available</div>;
-  }
+                        {/* Sidebar on the Right */}
+                        <div className="w-64 bg-green-50 p-6 gap-8 border-l border-green-200">
+                        <button
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors duration-300"
+                        onClick={() => event.eventBlocked ? unblockEvent() : toggleBlockEvent()}
+                        >
+                        {event.eventBlocked ? <Unlock size={18} /> : <Lock size={18} />}
+                        {event.eventBlocked ? "Unblock Event" : "Block Event"}
+                        </button>
 
-  return (
-    <div className="bg-gray-100 min-h-screen text-gray-800">
-      {/* Header Section */}
-      <header className="bg-white p-4 shadow-md flex justify-between items-center">
-        <div>
-          <h1 className="text-xl font-semibold">{eventData.eventName}</h1>
-          <p className="text-sm text-gray-500">Event Dashboard</p>
-        </div>
-        <div className="flex space-x-2">
-          <button className="bg-blue-500 text-white px-3 py-1 rounded">Edit</button>
-          <button className="bg-gray-200 px-3 py-1 rounded">Export</button>
-          <button className="bg-gray-200 px-3 py-1 rounded">Duplicate</button>
-        </div>
-      </header>
+                        {/* Button to switch to Details tab */}
+                        <button
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors duration-300 mt-4"
+                        onClick={() => setActiveTab('details')}
+                        >
+                        Details
+                        </button>
 
-      {/* Main Content */}
-      <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Circular Stats */}
-        <div className="bg-white p-4 shadow rounded col-span-2">
-          <div className="grid grid-cols-4 gap-4 text-center">
-            {[
-              { label: "Activity", value: eventData.activityCount, color: "green", icon: "📊" },
-              { label: "Upcoming", value: eventData.upcomingCount, color: "blue", icon: "📅" },
-              { label: "Overdue", value: eventData.overdueCount, color: "red", icon: "⚠️" },
-              { label: "Waiting", value: eventData.waitingCount, color: "orange", icon: "⏳" },
-            ].map((stat, index) => (
-              <div key={index} className="">
-                <div
-                  className={`rounded-full w-16 h-16 mx-auto flex items-center justify-center bg-${stat.color}-200`}
-                >
-                  <span className={`text-${stat.color}-600 text-xl font-bold`}>
-                    {stat.icon} {stat.value}
-                  </span>
-                </div>
-                <p className="mt-2 text-sm font-medium">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+                        {/* Button to switch to Dashboard tab */}
+                        <button
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors duration-300 mt-4"
+                        onClick={() => setActiveTab('dashboard')}
+                        >
+                        Dashboard
+                        </button>
+                        </div>
+                  </div>
+            </>
+      );
+};
 
-        {/* Appointments & Tools */}
-        <div className="bg-white p-4 shadow rounded">
-          <h2 className="text-lg font-semibold mb-4">Tools</h2>
-          <ul className="text-sm space-y-2">
-            {eventData.tools.map((tool, index) => (
-              <li key={index} className="flex justify-between">
-                <span>{tool.name}</span>
-                <span className="bg-gray-200 text-xs px-2 py-1 rounded">{tool.count}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Headcounts & Tags */}
-        <div className="bg-white p-4 shadow rounded">
-          <h2 className="text-lg font-semibold mb-4">Headcounts</h2>
-          <div className="space-y-2">
-            {[
-              { label: "Estimated", value: eventData.headcounts.estimated },
-              { label: "Actual", value: eventData.headcounts.actual },
-              { label: "Minimum", value: eventData.headcounts.minimum },
-            ].map((headcount, index) => (
-              <div key={index} className="flex justify-between">
-                <span>{headcount.label}</span>
-                <span className="bg-gray-200 text-xs px-2 py-1 rounded">{headcount.value}</span>
-              </div>
-            ))}
-          </div>
-
-          <h2 className="text-lg font-semibold mt-6 mb-4">Tags</h2>
-          <div className="flex space-x-2">
-            {eventData.tags.map((tag, index) => (
-              <span
-                key={index}
-                className="bg-gray-200 text-xs px-3 py-1 rounded-full"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Venue Details */}
-        <div className="bg-white p-4 shadow rounded">
-          <h2 className="text-lg font-semibold mb-4">Venue Details</h2>
-          <p className="text-sm text-gray-600">{eventData.venue.name}</p>
-          <p className="text-sm text-gray-600 mt-2">{eventData.venue.address}</p>
-          <p className="text-sm text-gray-600 mt-2">{eventData.venue.time}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default Userdashboard;
+export default UserDashboard;
