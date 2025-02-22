@@ -66,7 +66,7 @@ const RegisterForEvent = asyncHandler(async (req, res, next) => {
 
         // Extract required fields from event's custom form
         const missingFields = [];
-        event.eventCustomFormData.forEach((field) => {
+        event.eventCustomFormData?.forEach((field) => {
             if (field.required && !formData[field.id]) {
                 missingFields.push(field.heading);
             }
@@ -97,7 +97,9 @@ const RegisterForEvent = asyncHandler(async (req, res, next) => {
             .json(new ApiResponse(200, "Event registered successfully", event));
 
     } catch (err) {
-        throw new ApiError(500, err.message);
+        // throw new ApiError(500, err.message);
+        console.log("error =>> ", err);
+        return res.status(500).json(new ApiResponse(500, err.message));
     }
 });
 
