@@ -6,7 +6,7 @@ import { Routes, Route } from 'react-router-dom'
 import UserTemplate from './UserTemplate'
 import UserProtection from './UserProtection';
 import UserLogin from '../../user/Userlogin/Userlogin';
-
+import CreateEvent from '../../user/CreateEvent/CreateEvent';
 const NotFound = React.lazy(() => import('../../components/notfound/NotFound'));
 const Landing = React.lazy(() => import('../../home/landing/Landing'));
 
@@ -26,11 +26,8 @@ const UserRouter = () => {
                         {/*    user login components */}
                         <Route index element={<Landing />} />
                         <Route path='../' element={<UserLogin />} />
-
-
-
-
-
+                        <Route path='userlogin' element={<UserLogin />} />
+                        <Route path='' element={<CreateEvent />} />
                           {/*   Protected Routes by Gaurav Ghuge */}
                         <Route path='../../user/Userlogin/Userlogin*' element={<UserProtection />}>
                         
