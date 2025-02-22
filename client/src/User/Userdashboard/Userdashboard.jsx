@@ -19,7 +19,7 @@ const UserDashboard = () => {
       // Fetch event details from API
       const fetchEventDetails = async () => {
             try {
-                  const { data, error, success } = await fetchData(`/api/v1/admin/events/viewEventDetails/${eventId}`);
+                  const { data, error, success } = await fetchData(`/api/v1/user/profile/getUserDashboard`);
 
                   if (error) {
                         console.log(error);
@@ -34,44 +34,7 @@ const UserDashboard = () => {
             }
       };
 
-      // Block/Unblock Event
-      const toggleBlockEvent = async () => {
-            try {
-                  const { data, error, success } = await sendFormData(`/api/v1/admin/block-event`, {
-                        eventId: eventId
-                  });
-
-                  if (error) {
-                        toast.error(error);
-                        return;
-                  }
-
-                  toast.success(success);
-                  fetchEventDetails();
-            } 
-            catch (err) {
-                  console.log(err);
-            }
-      };
-
-      const unblockEvent = async () => {
-            try {
-                  const { data, error, success } = await sendFormData(`/api/v1/admin/unblock-event`, {
-                        eventId: eventId
-                  });
-
-                  if (error) {
-                        toast.error(error);
-                        return;
-                  }
-
-                  toast.success(success);
-                  fetchEventDetails();
-            } 
-            catch (err) {
-                  console.log(err);
-            }
-      };
+   
 
       // Fetch event details on mount
       useEffect(() => {
@@ -112,13 +75,7 @@ const UserDashboard = () => {
 
                         {/* Sidebar on the Right */}
                         <div className="w-64 bg-green-50 p-6 gap-8 border-l border-green-200">
-                        <button
-                        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors duration-300"
-                        onClick={() => event.eventBlocked ? unblockEvent() : toggleBlockEvent()}
-                        >
-                        {event.eventBlocked ? <Unlock size={18} /> : <Lock size={18} />}
-                        {event.eventBlocked ? "Unblock Event" : "Block Event"}
-                        </button>
+                       
 
                         {/* Button to switch to Details tab */}
                         <button
