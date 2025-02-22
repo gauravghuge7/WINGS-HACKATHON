@@ -18,5 +18,7 @@ adminRouter.route("/getAdmin/:adminId")
 
 adminRouter.route("/updateAdmin/:adminId")
             .put(upload.none(), updateAdmin);
+    
+            
 
 export default adminRouter;
