@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css'
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
   
@@ -7,10 +8,24 @@ function App() {
   return (
     <>
 
-      <h2 className=" bg-gray-200 ">
-        this is the new code 
-      </h2>
-    
+      <Routes>
+
+        <Route>
+          
+          <Route path='admin/*' element={<h1>Admin</h1>} />
+
+
+          <Route path='/*' element={<h1>Admin</h1>} />
+
+
+
+        </Route>
+
+
+      </Routes>
+
+
+      
     </>
   )
 }
