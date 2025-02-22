@@ -133,7 +133,7 @@ const ShowOf = () => {
                             Discover curated events to enhance your skills, showcase expertise, and connect with industry leaders.
                         </p>
                         <Link
-        to="/explore"
+        to="/latestEvents"
         className="relative inline-block px-4 py-2 text-lg font-semibold text-white uppercase tracking-wider bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg shadow-lg transform transition-all duration-500 ease-out hover:scale-110 active:scale-95 overflow-hidden group"
     >
         {/* Outer Glowing Effect */}
