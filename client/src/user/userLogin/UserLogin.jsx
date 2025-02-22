@@ -2,12 +2,12 @@
 import React from 'react';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 import useReactApi from "../../hooks/useReactApi/useReactApi";
 // import { setUserData } from "../../Redux/UserReducer/UserReducer";
+import axios from "axios";
 
 const UserLogin = () => {
   const dispatch = useDispatch();
@@ -34,20 +34,38 @@ const UserLogin = () => {
           email: response.email,
           email_verified: response.email_verified,
         };
-        const { data, error } = await sendFormData("/api/v1/user/google-login", googleData);
-        dispatch(setUserData(data?.data?.user));
+        // const { data, error } = await sendFormData("/api/v1/user/google-login", googleData);
+        
+        await axios.post("/api/v1/user/loginUsingGoogle", googleData)
+        .then((res) => {
+            if(res.status === 200) {
+              toast.success("User created successfully");
+              localStorage.setItem("eventUser", true);
+              localStorage.setItem("user", true);
+              // dispatch(setUserData(data?.data?.user));
+              navigate("/");
+            } else {
+              toast.error("Something went wrong");
+              console.log(res);
+            }
+        })
+        .catch((err) => {
+            toast.error(err?.response?.data?.message);
+            console.log(err);
+        })
+        // dispatch(setUserData(data?.data?.user));
 
-        if (error) {
-          setLoginError(error);
-          toast.error(error);
-          return;
-        }
-        console.log(data);
-        toast.success(data?.message);
-        localStorage.setItem("eventUser", true);
-        localStorage.setItem("user", true);
-        dispatch(setUserData(data?.data?.user));
-        navigate("/");
+        // if (error) {
+        //   setLoginError(error);
+        //   toast.error(error);
+        //   return;
+        // }
+        // console.log(data);
+        // toast.success(data?.message);
+        // localStorage.setItem("eventUser", true);
+        // localStorage.setItem("user", true);
+        // dispatch(setUserData(data?.data?.user));
+        // navigate("/");
       }
     } 
     catch (error) {
@@ -61,21 +79,39 @@ const UserLogin = () => {
     e.preventDefault();
     try {
       const url = "/api/v1/user/login";
-      const formData = {
-        userEmail: username,
-        userPassword: password,
-      };
-      const { data, error, success  } = await sendFormData(url, { userData: formData });
-      if (error) {
-        setLoginError(error);
-        toast.error(error); 
-        return;
-      }
-      toast.success(success);
-      localStorage.setItem("eventUser", true);
-      localStorage.setItem("user", true);
-      // dispatch(setUserData(data?.data));
-      navigate("/");
+      // const formData = {
+      //   userEmail: username,
+      //   userPassword: password,
+      // };
+
+      const testData = new FormData();
+      testData.append("userEmail", username);
+      testData.append("userPassword", password);
+
+      console.log("testData => ", testData);
+
+      await axios.post(url, testData)
+      .then((res) => {
+
+         console.log("User Created Successfully");
+
+          localStorage.setItem("eventUser", true);
+          localStorage.setItem("user", true);
+          // dispatch(setUserData(data?.data));
+          navigate("/");
+      })
+      .catch((err) => {
+          toast.error(err?.response?.data?.message);
+          console.log(err);
+      })
+      
+      
+
+      // toast.success(success);
+      // localStorage.setItem("eventUser", true);
+      // localStorage.setItem("user", true);
+      // // dispatch(setUserData(data?.data));
+      // navigate("/");
     } 
     catch (error) {
       console.log("error => ", error);
@@ -84,7 +120,7 @@ const UserLogin = () => {
 
   return (
     <div className="bg-gradient-to-r from-gray-50 to-gray-100 min-h-screen flex items-center justify-center m-20">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <div className="bg-white rounded-xl shadow-2xl overflow-hidden w-full max-w-4xl">
         <div className="flex flex-col md:flex-row">
           {/* Left Section */}
@@ -188,6 +224,7 @@ const UserLogin = () => {
           </div>
         </div>
       </div>
+        <ToastContainer/>
     </div>
   );
 };

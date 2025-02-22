@@ -55,7 +55,6 @@ const UserRouter = () => {
 
                         <Route path='/services' element={<ContactUs />} />
 
-                        <Route path='/services' element={<Services/>} />
                         
 
 

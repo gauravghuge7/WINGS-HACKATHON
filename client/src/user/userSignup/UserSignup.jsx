@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from 'react-router-dom';
 import useReactApi from "../../hooks/useReactApi/useReactApi";
+import axios from "axios";
 
 const UserSignup = () => {
   // State for form fields
@@ -34,33 +35,42 @@ const UserSignup = () => {
       return;
     }
 
-    const formSendData = {
-      userEmail: formData.email,
-      userPassword: formData.password,
-      userFirstName: formData.firstName,
-      userLastName: formData.lastName,
-    };
+
 
     try {
 
-      console.log("formSendData => ", formSendData);
+      // console.log("formSendData => ", );
 
-      const {data, error, success} = await sendFormData("/api/v1/user/register", { userData: formSendData });
-   
-      if (error) {
-        toast.error(error);
-        return;
-      }
+      const testData = new FormData();
+      testData.append("userEmail", formData.email);
+      testData.append("userPassword", formData.password);
+      testData.append("userFirstName", formData.firstName);
+      testData.append("userLastName", formData.lastName);
+
+      console.log("testData => ", testData);
+
+    await axios.post("/api/v1/user/register", testData)
+    .then((res) => {
+        if(res.status === 201) {
+          toast.success("User registered successfully");
+          setFormData({
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+          });
+          navigate("/user/login");  
+        } else {
+          toast.error("Something went wrong");
+          console.log(res);
+        }
+    })
+    .catch((err) => {
+        toast.error(err?.response?.data?.message);
+        console.log(err);
+    })
       
-      toast.success(success);
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
-      navigate("/user/login");  
  
     } 
     catch (error) {
@@ -229,6 +239,7 @@ const UserSignup = () => {
           </p>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 };
