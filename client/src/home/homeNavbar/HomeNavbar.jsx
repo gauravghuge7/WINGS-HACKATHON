@@ -64,7 +64,7 @@ const ProfessionalHeader = React.memo( () => {
       { name: "My Events", to: "/user/myEvents" },
       { name: "Bookmarked Events", to: "/user/event/bookmarked" },
       { name: "Liked Events", to: "/user/event/liked" },
-      { name: "Create A Event", to: "/user/createEvent" },
+      { name: "Create A Event", to: "/CreateEvent" },
       { name: "User Dashboard", to: "/user/userDashboard" },
       { name: "My Events ", to: "/user/userEvent" },
       { name: "Log Out", to: "#", onClick: handleLogout },
@@ -112,7 +112,7 @@ const ProfessionalHeader = React.memo( () => {
           </button>
         ) : (
           <Link
-            to="/client/src/user/userLogin/UserLogin.jsx"
+            to="/user/login"
             className="flex items-center px-6 py-2 text-lg text-white font-medium rounded-full bg-gradient-to-r from-blue-500 to-blue-700 transition-transform duration-300 hover:scale-105 hover:from-blue-600 hover:to-blue-800 shadow-md"
           >
             Login
