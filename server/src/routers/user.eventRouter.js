@@ -11,32 +11,34 @@ const   {  RegisterForEvent,
         generateAIDescription,
         getAllUserEvents } from "../controllers/v1/user.eventController.js";
 
+const upload from '../middlewares/multerMiddleware.js';
 
-userEventRouter.route("/getAllUserEvents")
-                .get(getAllUserEvents);
 
-userEventRouter.route("/RegisterForEvent")
-                .post(RegisterForEvent);
+userEventRouter.route("/getAllUserEvents/:userId")
+                .get(upload.none(), getAllUserEvents);
 
-userEventRouter.route("/UnRegisterForEvent")
-                .post(UnRegisterForEvent);
+userEventRouter.route("/RegisterForEvent/:id")
+                .post(upload.none(), RegisterForEvent);
 
-userEventRouter.route("/likeEvent")
+userEventRouter.route("/UnRegisterForEvent/:id")
+                .post(upload.none(), UnRegisterForEvent);
+
+userEventRouter.route("/likeEvent/:id")
                 .post(likeEvent);
 
-userEventRouter.route("/dislikeEvent")
+userEventRouter.route("/dislikeEvent/:id")
                 .post(dislikeEvent);
 
-userEventRouter.route("/bookmarkEvent")
+userEventRouter.route("/bookmarkEvent/:id")
                 .post(bookmarkEvent);
 
-userEventRouter.route("/unbookmarkEvent")
+userEventRouter.route("/unbookmarkEvent/:id")
                 .post(unbookmarkEvent);
 
-userEventRouter.route("/BookmarkedEvents")
+userEventRouter.route("/BookmarkedEvents/:userId")
                 .get(BookmarkedEvents);
 
-userEventRouter.route("/LikedEvents")
+userEventRouter.route("/LikedEvents/:userId")
                 .get(LikedEvents);
 
 userEventRouter.route("/generateAIDescription")
