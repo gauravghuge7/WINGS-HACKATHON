@@ -6,6 +6,7 @@ function Landing() {
     <div>
 
       <LandingPage />
+      <Footer />
 
     </div>
   )
