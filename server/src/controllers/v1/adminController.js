@@ -30,7 +30,7 @@ const register = asyncHandler(async (req, res, next) => {
 
         console.log("data => ", adminData);
 
-        emptyFieldValidator(adminData.adminEmail, adminData.adminPassword, adminData.adminFullName, adminData.adminSection, adminData.adminBio, adminData.adminMobileNumber, adminData.adminPhoto);
+        emptyFieldValidator(adminData.adminEmail, adminData.adminPassword, adminData.adminFullName);
     
         if(!validator.isEmail(adminData.adminEmail)) {        
             throw new ApiError(400, 'Email is not valid');

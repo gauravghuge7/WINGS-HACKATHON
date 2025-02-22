@@ -55,55 +55,55 @@ const useReactApi = () => {
             
       };
 
-      const sendFormData = async (url, formData) => {
+       //  for send formdata post request to server
+     const sendFormData = async (url, formData) => {
 
-            let data = {};
-            let error = null;
-            let loading = false;
-            let success = "";
-  
-            try {
-             
-  
-                 const config = {
-                      headers: {
+          let data = {};
+          let error = null;
+          let loading = false;
+          let success = "";
+
+          try {
+           
+
+               const config = {
+                    headers: {
                          'Content-Type': 'multipart/form-data',
-                      },
-                      withCredentials: true,
-                 }
-  
-                 loading = true;
-                 setLoading(true);
-                 const response = await axios.post(url, formData, config); 
-  
-                 data = response?.data;
-                 success = response?.data?.message;
-                 error = null;
-                 
-  
-            } 
-            catch (e) {
-                 
-                 const err = e?.response?.data;
-                 console.log("err => ", e);
-                 const message = extractErrorMessage(err)
-  
-                 error = message || "unknown error occured while sending data";
-  
-            }
-            finally {
-                 loading = false;
-                 setLoading(false);
-            }
-  
-            return {
-                 data,
-                 error,
-                 success,
-                 loading,
-            };
-  
-      };
+                    },
+                    withCredentials: true,   
+               }
+
+
+               loading = true;
+               const response = await axios.post(url, formData, config); 
+
+               data = response?.data;
+               success = response?.data?.message;
+               error = null;
+               
+
+          } 
+          catch (e) {
+               
+               const err = e?.response?.data;
+               console.log("err => ", e);
+               const message = extractErrorMessage(err)
+
+               error = message || "unknown error occured while sending data";
+
+          }
+          finally {
+               loading = false;
+          }
+
+          return {
+               data,
+               error,
+               success,
+               loading,
+          };
+
+     };
 
       const deleteData = async (url) => {     
 

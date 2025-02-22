@@ -10,6 +10,7 @@ import store from './redux/store/store.js'
 import 'react-toastify/dist/ReactToastify.css';
 import { Auth0Provider } from '@auth0/auth0-react';
 
+
 //     here is the axios configuration 
 
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL;

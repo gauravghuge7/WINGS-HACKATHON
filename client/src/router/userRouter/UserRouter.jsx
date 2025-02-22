@@ -73,7 +73,7 @@ const UserRouter = () => {
 
 
                           {/*   Protected Routes by Gaurav Ghuge */}
-                        <Route path='' element={<UserProtection />}>
+                        <Route path='*' element={<UserProtection />}>
                         
 
 
