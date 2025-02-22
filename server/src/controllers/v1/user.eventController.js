@@ -215,8 +215,8 @@ const dislikeEvent = asyncHandler(async (req, res, next) => {
         const { id } = req.params;
         const { userId } = req.body;
 
-        console.log("eventId :", id);
-        console.log("userId :", userId);
+        // console.log("eventId :", id);
+        // console.log("userId :", userId);
     
         const event = await Event.findById(id);
         const user = await User.findById(userId);
@@ -376,6 +376,7 @@ const unbookmarkEvent = asyncHandler(async (req, res, next) => {
 
 
 
+// all events bookmarked by user
 const BookmarkedEvents = asyncHandler(async (req, res, next) => {
 
     try {
@@ -408,7 +409,7 @@ const BookmarkedEvents = asyncHandler(async (req, res, next) => {
 });
 
 
-
+// all events liked by user
 const LikedEvents = asyncHandler(async (req, res, next) => {    
     try {
         const { userId } = req.params;
