@@ -256,7 +256,11 @@ const LandingPage = () => {
                 whileTap={{ scale: 0.95 }}
                 className="border-2 border-purple-500 text-purple-100 px-8 py-4 rounded-xl text-lg font-medium hover:bg-purple-900/20 transition-all"
               >
+                <Link
+                 to="/contact"> 
                 Contact Sales
+                </Link>
+                
               </motion.button>
             </div>
           </motion.div>

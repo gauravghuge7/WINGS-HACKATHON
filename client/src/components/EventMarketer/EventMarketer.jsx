@@ -65,42 +65,36 @@ const services = [
   {
     image: img1,
     alt: "Screenshot of Attendee Hub interface",
-    title: "MyWebsite Attendee Hub®",
     description: "Build engaging in-person, virtual, and hybrid events",
-    linkText: "Build the perfect event"
+    linkText: "Create Educational Events"
   },
   {
     image: img2,
     alt: "Screenshot of Registration interface",
-    title: "MyWebsite Studio™",
     description: "Easily produce webinars, virtual content, and more",
-    linkText: "Improve your video content"
+    linkText: "Create Stand-up Comedy Events"
   },
   {
     image: img3,
     alt: "Screenshot of Event Management interface",
-    title: "Event Management™",
     description: "Manage your event from start to finish in one place",
     linkText: "Manage it all in one place"
   },
   {
     image: img4,
     alt: "Screenshot of Registration interface",
-    title: "MyWebsite Studio™",
     description: "Easily produce webinars, virtual content, and more",
-    linkText: "Improve your video content"
+    linkText: "Create Corporate Events"
   },
   {
     image: img5,
     alt: "Screenshot of Registration interface",
-    title: "MyWebsite Studio™",
     description: "Easily produce webinars, virtual content, and more",
     linkText: "Improve your video content"
   },
   {
     image: img6,
     alt: "Screenshot of Registration interface",
-    title: "MyWebsite Studio™",
     description: "Easily produce webinars, virtual content, and more",
     linkText: "Improve your video content"
   }
