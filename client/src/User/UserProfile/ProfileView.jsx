@@ -8,7 +8,6 @@ const ProfileView = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
 
-
   const [formData, setFormData] = useState({
     userFirstName: "",
     userLastName: "",
@@ -40,7 +39,6 @@ const ProfileView = () => {
 
   // Handle input changes
   const handleInputChange = (e) => {
-    console.log("e.target.name => ", e.target);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -72,7 +70,6 @@ const ProfileView = () => {
       setIsUploading(false);
     }
   };
-  
 
   // Handle form submission
   const handleSave = async (e) => {
@@ -84,7 +81,7 @@ const ProfileView = () => {
     form.append("userEmail", formData.userEmail);
     form.append("userBio", formData.userBio);
     form.append("userLocation", formData.userLocation);
-    form.append("userWebsite", formData.userWebsite);
+    form.append("userMobileNumber", formData.userMobileNumber);
 
     const { data, error } = await updateDataUsingPut("/api/v1/user/profile/updateUserProfile", form);
 
@@ -99,94 +96,84 @@ const ProfileView = () => {
       fetchProfile(); // Refresh profile after update
       toast.success("Profile updated successfully!");
     }
-
   };
 
-  if (loading) return <p className="text-center text-gray-600 mt-10">Loading profile...</p>;
-
+  if (loading) return <p className="text-center text-gray-400 mt-10">Loading profile...</p>;
 
   return (
-    <div className="min-h-screen  p-8">
+    <div className="min-h-screen bg-gray-800 p-8">
       <ToastContainer position="top-right" autoClose={5000} />
-      {error && <p className="text-center text-red-500 mt-10">Error: {error}</p>}
-      <div className="max-w-4xl mx-auto p-8 rounded-xl ">
+      {error && <p className="text-center text-red-400 mt-10">Error: {error}</p>}
+      <div className="max-w-4xl mx-auto p-8 rounded-xl bg-gray-900 shadow-lg">
         {!isEditing ? (
-          <div className="w-full bg-gradient-to-br p-8 rounded-xl shadow-2xl">
-          {/* Cover Image */}
-          <div className="relative h-48 bg-gradient-to-r from-green-100 to-blue-100 rounded-t-xl flex items-center justify-center">
-            <h2 className="text-black text-4xl font-bold">User Profile</h2>
-          </div>
-        
-          {/* Profile Container */}
-          <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-6 -mt-12 p-6">
-            
-            {/* Profile Picture */}
-            <div className="relative">
-              <img
-                src={formData?.userProfilePicture?.secure_url || "https://randomuser.me/api/portraits/men/1.jpg"}
-                alt="Admin Avatar"
-                className="w-40 h-40 rounded-full border-4 border-white shadow-lg object-cover"
-              />
+          <div className="w-full p-8 rounded-xl">
+            {/* Cover Image */}
+            <div className="relative h-48 bg-gradient-to-r from-gray-700 to-gray-900 rounded-t-xl flex items-center justify-center">
+              <h2 className="text-white text-4xl font-bold">User Profile</h2>
             </div>
-
-           
-
-            {/* Profile Details */}
-            <div className="text-start md:text-left mt-20 ">
-
-              <section className="flex flex-col md:flex-row items-start md:items-start md:space-x-6 -mt-12">
-                <h2 className="text-3xl font-semibold text-gray-800">{formData?.userFirstName || "Admin"  &&  formData?.userLastName || "Admin"}</h2>
-                <p className="text-lg text-gray-500 items-end">{formData?.userRole || "Admin"}</p>
-              </section>
-
-              <p className="text-md text-gray-400 ">
-                Joined: {formData?.createdAt ? new Date(formData?.createdAt)?.toLocaleDateString() : "N/A"}
-              </p>
-
-              <section className="flex flex-col md:flex-row items-start space-x-4 md:items-start ">
-                <p><span className="font-medium">Email:</span> {formData.userEmail || "N/A"}</p>
-                <p><span className="font-medium">Mobile:</span> {formData.userMobileNumber || "N/A"}</p>
-              </section>
         
-              <div className="mt-1 space-y-2 text-gray-600">
-                <p><span className="font-medium">Bio:</span> {formData.userBio || "N/A"}</p>
-                <p><span className="font-medium">Section:</span> {formData.userSection || "N/A"}</p>
-              </div>
-        
-             
-        
-              {/* Edit Button */}
-              <button
-                onClick={() => setIsEditing(true)}
-                className="mt-6 px-6 py-2 bg-black text-white text-lg font-medium rounded-lg shadow-md hover:from-blue-700 hover:to-purple-700 transition duration-300"
-              >
-                Edit Profile
-              </button>
-            </div>
-          </div>
-        </div>
-
-        
-        ) : (
-          <div className="w-full bg-gradient-to-br p-8 rounded-xl shadow-2xl border-2 border-gray-200">
-            <h2 className="text-3xl font-bold  text-gray-800 mb-6">Edit Profile</h2>
-            <form onSubmit={handleSave} className="space-y-6">
-
-              {/*  Avatar Uploading and Editing  */}
-              <div className="flex flex-col items-center space-y-4">
-
-              <div className="relative w-32 h-32">
+            {/* Profile Container */}
+            <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-6 -mt-12 p-6">
+              {/* Profile Picture */}
+              <div className="relative">
                 <img
-                  src={previewImage || formData?.userProfilePhoto?.secure_url}
+                  src={formData?.userProfilePicture?.secure_url || "https://randomuser.me/api/portraits/men/1.jpg"}
                   alt="Admin Avatar"
-                  className="w-full h-full rounded-full border-4 border-blue-500 object-cover"
+                  className="w-40 h-40 rounded-full border-4 border-gray-800 shadow-lg object-cover"
                 />
-                {isUploading && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full">
-                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></div>
-                  </div>
-                )}
               </div>
+
+              {/* Profile Details */}
+              <div className="text-start md:text-left mt-20">
+                <section className="flex flex-col md:flex-row items-start md:items-start md:space-x-6 -mt-12">
+                  <h2 className="text-3xl font-semibold text-white">
+                    {formData?.userFirstName || "Admin"} {formData?.userLastName || "Admin"}
+                  </h2>
+                  <p className="text-lg text-gray-400 items-end">{formData?.userRole || "Admin"}</p>
+                </section>
+
+                <p className="text-md text-gray-500">
+                  Joined: {formData?.createdAt ? new Date(formData?.createdAt)?.toLocaleDateString() : "N/A"}
+                </p>
+
+                <section className="flex flex-col md:flex-row items-start space-x-4 md:items-start">
+                  <p><span className="font-medium text-gray-300">Email:</span> {formData.userEmail || "N/A"}</p>
+                  <p><span className="font-medium text-gray-300">Mobile:</span> {formData.userMobileNumber || "N/A"}</p>
+                </section>
+        
+                <div className="mt-1 space-y-2 text-gray-400">
+                  <p><span className="font-medium text-gray-300">Bio:</span> {formData.userBio || "N/A"}</p>
+                  <p><span className="font-medium text-gray-300">Section:</span> {formData.userSection || "N/A"}</p>
+                </div>
+        
+                {/* Edit Button */}
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="mt-6 px-6 py-2 bg-blue-600 text-white text-lg font-medium rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
+                >
+                  Edit Profile
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="w-full p-8 rounded-xl">
+            <h2 className="text-3xl font-bold text-white mb-6">Edit Profile</h2>
+            <form onSubmit={handleSave} className="space-y-6">
+              {/* Avatar Uploading and Editing */}
+              <div className="flex flex-col items-center space-y-4">
+                <div className="relative w-32 h-32">
+                  <img
+                    src={previewImage || formData?.userProfilePicture?.secure_url || "https://randomuser.me/api/portraits/men/1.jpg"}
+                    alt="Admin Avatar"
+                    className="w-full h-full rounded-full border-4 border-blue-500 object-cover"
+                  />
+                  {isUploading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full">
+                      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-white"></div>
+                    </div>
+                  )}
+                </div>
 
                 <label className="cursor-pointer">
                   <span className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
@@ -202,82 +189,70 @@ const ProfileView = () => {
               </div>
 
               <div>
-                <label className="block text-gray-700 font-medium mb-2">First Name</label>
+                <label className="block text-gray-300 font-medium mb-2">First Name</label>
                 <input
                   type="text"
                   name="userFirstName"
-                  value={formData?.userFirstName}
+                  value={formData?.userFirstName || ""}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 font-medium mb-2">Last Name</label>
+                <label className="block text-gray-300 font-medium mb-2">Last Name</label>
                 <input
                   type="text"
                   name="userLastName"
-                  value={formData?.userLastName}
+                  value={formData?.userLastName || ""}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 font-medium mb-2">Email</label>
+                <label className="block text-gray-300 font-medium mb-2">Email</label>
                 <input
                   type="email"
                   name="userEmail"
-                  value={formData.userEmail}
+                  value={formData.userEmail || ""}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   disabled
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 font-medium mb-2">Role</label>
-                <input
-                  type="text"
-                  name="userBio"
-                  value={formData?.userBio}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-gray-700 font-medium mb-2">Mobile Number</label>
+                <label className="block text-gray-300 font-medium mb-2">Mobile Number</label>
                 <input
                   type="text"
                   name="userMobileNumber"
-                  value={formData.userMobileNumber}
+                  value={formData.userMobileNumber || ""}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 font-medium mb-2">Bio</label>
+                <label className="block text-gray-300 font-medium mb-2">Bio</label>
                 <textarea
                   name="userBio"
-                  value={formData.userBio}
+                  value={formData.userBio || ""}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 font-medium mb-2">Admin Section</label>
+                <label className="block text-gray-300 font-medium mb-2">User Section</label>
                 <input
                   type="text"
                   name="userSection"
-                  value={formData.userSection}
+                  value={formData.userSection || ""}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
 
@@ -296,7 +271,6 @@ const ProfileView = () => {
                   Cancel
                 </button>
               </div>
-
             </form>
           </div>
         )}

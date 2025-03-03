@@ -127,7 +127,9 @@ const getAllEvents = asyncHandler(async (req, res, next) => {
         throw new ApiError(404, 'No events found');
     }
 
-    res.send(new ApiResponse(200, 'Events fetched successfully', events));
+    return res
+        .status(200)
+        .json(new ApiResponse(200, 'Events fetched successfully', events));
 });
 
 

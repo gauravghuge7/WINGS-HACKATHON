@@ -17,7 +17,32 @@ axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL;
 axios.defaults.withCredentials = true;
 axios.defaults.proxy = true;
 
-export const socket = io(import.meta.env.VITE_SERVER_URL);
+
+
+const getUserId = () => {
+  let userId = localStorage.getItem("uniqueUserId");
+  if (!userId) {
+      userId = crypto.randomUUID();  // Generate new ID only if not set
+      localStorage.setItem("uniqueUserId", userId);
+  }
+  return userId;
+};
+
+
+const userId = getUserId();
+
+export const socket = io(import.meta.env.VITE_SERVER_URL, {
+  query: {
+    userId: userId,
+  },
+});
+
+console.log("userId => ", userId);
+
+socket.on("connect", () => {
+  console.log("Connected to server");
+});
+
 
 createRoot(document.getElementById('root')).render(
 
@@ -29,11 +54,11 @@ createRoot(document.getElementById('root')).render(
     redirect_uri: window.location.origin
     }}
   >
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   </Auth0Provider>  
 
 )

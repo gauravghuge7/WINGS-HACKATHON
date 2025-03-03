@@ -65,7 +65,7 @@ const ProfessionalHeader = React.memo( () => {
       { name: "Liked Events", to: "/user/event/liked" },
       { name: "Create A Event", to: "/user/createEvent" },
       { name: "User Dashboard", to: "/user/userDashboard" },
-      { name: "My Events ", to: "/user/userEvent" },
+      { name: "My Events ", to: "/user/myEvents" },
       { name: "Log Out", to: "#", onClick: handleLogout },
     ],
     [handleLogout]

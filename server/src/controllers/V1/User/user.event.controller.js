@@ -4,31 +4,30 @@ import { Event } from '../../../models/eventModels/event.model.js';
 import User from '../../../models/userModels/user.model.js';
 import { asyncHandler } from "../../../utils/AsyncHandler.js";
 import {GoogleGenerativeAI} from "@google/generative-ai";
+import { io, users } from "../../../socket/socketServer.js";
 
 
 const getAllUserEvents = asyncHandler(async (req, res, next) => {
     try {
-        const { userId } = req.params;
 
-        if (!userId) {
-            throw new ApiError(400, "User ID is required");
-        }
+        console.log("user code => ", req.user);
 
-        const user = await User.findById(userId).populate({
-            path: "userEnrolledEvents",
-            select: "title description date location",
-        });
+        const { id:userId } = req.user;
+
+
+        const user = await User.findById(userId);
 
         if (!user) {
             throw new ApiError(404, "User not found");
         }
 
-        const events = await Event.find({ _id: { $in: user.userEnrolledEvents } });
+        const events = await Event.find();
 
         return res.status(200).json(
             new ApiResponse(200, "All User Events", events)
         );
-    } catch (error) {
+    } 
+    catch (error) {
         throw new ApiError(500, error.message);
     }
 });
@@ -91,6 +90,20 @@ const RegisterForEvent = asyncHandler(async (req, res, next) => {
             { $push: { userEnrolledEvents: id } },
             { new: true }
         );
+
+        
+
+        io.to(event.eventOrganiser).emit("receiveNotification", {
+            message: "Event Registered by the user ",
+        });
+
+        users.forEach((user) => {
+            if (user) {
+                io.to(user).emit("receiveNotification", {
+                    message: `Event Registered by the ${user.userFirstName + user.userLastName}`,
+                });
+            }
+        });
 
         return res
             .status(200)

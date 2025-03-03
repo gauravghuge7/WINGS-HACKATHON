@@ -15,6 +15,9 @@ function MyEvents() {
         try {
             const { data, error, success } = await fetchData("/api/v1/user/event/getAllUserEvents");
 
+            console.log(data)
+            console.log(error)
+
             if (error) {
                 toast.error(error);
                 setError(error);
@@ -22,11 +25,12 @@ function MyEvents() {
             }
 
             toast.success(success);
-            setEvents(data?.data?.events || []);
-        } catch (error) {
+            setEvents(data?.data || []);
+        } 
+        catch (error) {
             console.log(error);
         }
-    }, []);
+    }, [fetchData]);
 
     useEffect(() => {
         getEvents();
@@ -49,7 +53,7 @@ function MyEvents() {
 
     const handleSearchChange = useCallback((e) => {
         setSearchTerm(e.target.value);
-        setCurrentPage(1); // Reset to first page on search
+        setCurrentPage(1);
     }, []);
 
     const handlePageChange = useCallback((page) => {
@@ -57,7 +61,7 @@ function MyEvents() {
     }, []);
 
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4 bg-black text-white">
             <ToastContainer />
 
             <div className="mb-4">
@@ -66,23 +70,23 @@ function MyEvents() {
                     placeholder="Search by title..."
                     value={searchTerm}
                     onChange={handleSearchChange}
-                    className="w-full p-2 border border-gray-300 rounded-md"
+                    className="w-full p-2 border border-gray-700 rounded-md bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
                 />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {error && <span>{error}</span>}
+                {error && <span className="text-red-400">{error}</span>}
 
                 {paginatedEvents.map(event => (
-                    <div key={event._id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div key={event._id} className="bg-gray-900 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
                         <img
-                            src={event.imageUrl} // Add imageUrl to your event object if available
+                            src={event.imageUrl}
                             alt={event.eventTitle}
                             className="w-full h-48 object-cover"
                         />
                         <div className="p-4">
-                            <h2 className="text-xl font-semibold mb-2">{event.eventTitle}</h2>
-                            <p className="text-gray-600 text-sm mb-4" dangerouslySetInnerHTML={{ __html: event.eventDescription }}></p>
+                            <h2 className="text-xl font-semibold mb-2 text-white">{event.eventTitle}</h2>
+                            <p className="text-gray-400 text-sm mb-4" dangerouslySetInnerHTML={{ __html: event.eventDescription }}></p>
                             <p className="text-gray-500 text-xs">
                                 Date: {new Date(event.eventDate).toLocaleDateString()}
                             </p>
@@ -94,7 +98,7 @@ function MyEvents() {
                             </p>
                             <Link
                                 to={`/user/event/${event._id}`}
-                                className="mt-4 inline-block w-full text-center bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300"
+                                className="mt-4 inline-block w-full text-center bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
                             >
                                 View Details
                             </Link>
@@ -109,7 +113,7 @@ function MyEvents() {
                         key={index + 1}
                         onClick={() => handlePageChange(index + 1)}
                         className={`mx-1 px-4 py-2 rounded-md ${
-                            currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'
+                            currentPage === index + 1 ? 'bg-blue-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
                         }`}
                     >
                         {index + 1}

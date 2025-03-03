@@ -28,7 +28,6 @@ const AdminSignup = lazy(() => import("../../../Admin/AdminSignUp/AdminSignUp"))
 // Protected User Components
 const UserProfile = lazy(() => import("../../../User/UserProfile/UserProfile"));
 const CreateEvent = lazy(() => import("../../../User/CreateEvent/CreateEvent"));
-const UserEvent = lazy(() => import("../../../User/UserEvents/UserEvent"));
 const Userdashboard = lazy(() => import("../../../User/Userdashboard/Userdashboard"));
 const EventForm = lazy(() => import("../../../User/EventForm/EventForm"));
 const ShowSingleEvent = lazy(() => import("../../../Components/ShowEvent/ShowSingleEvent"));
@@ -76,8 +75,6 @@ const UserRoute = () => {
             <Route path="userDashboard" element={<Userdashboard />} />
             <Route path="myEvents" element={<MyEvents />} />
 
-            
-            <Route path="UserEvent" element={<UserEvent />} />
             <Route path="CreateEvent" element={<CreateEvent />} />
             <Route path="EventForm" element={<EventForm />} />
 

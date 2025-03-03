@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { socket } from "../../../main";
-import NotificationsIcon from "@mui/icons-material/Notifications"; // Import the Material Icon
+import NotificationsIcon from "@mui/icons-material/Notifications"; // Material Icon for bell
 
 const NotificationButton = () => {
   const [status, setStatus] = useState("default"); // Track notification permission status
-  const [showPopup, setShowPopup] = useState(false); // Show popup if notifications are blocked
+  const [showDropdown, setShowDropdown] = useState(false); // Toggle notification dropdown
   const [notifications, setNotifications] = useState([]); // Store received notifications
 
   // Check notification permission status on component mount
@@ -12,7 +12,8 @@ const NotificationButton = () => {
     if ("Notification" in window) {
       if (Notification.permission === "granted") {
         setStatus("granted");
-      } else if (Notification.permission === "denied") {
+      } 
+      else if (Notification.permission === "denied") {
         setStatus("blocked");
       }
     }
@@ -20,23 +21,20 @@ const NotificationButton = () => {
 
   // Listen for real-time notifications from the socket
   useEffect(() => {
-
     const handleReceiveNotification = (data) => {
-      console.log("data :", data);
-      setNotifications((prev) => [...prev, data?.response]); // Add new notification to the list
 
-      // Show browser notification if permission is granted
-      if (Notification.permission === "granted") {
-        new Notification("New Notification", {
-          body: data?.response?.message,
-          icon: "https://example.com/icon.png", // Optional: Add an icon
-        });
-      }
+      console.log("data => ", data)
+    
+      new Notification("New Notification", {
+        body: data?.message,
+        icon: "https://example.com/icon.png", // Optional: Add an icon
+      });
+      
+      setNotifications((prev) => [...prev, data?.message]); // Add new notification to the list
     };
 
     socket.on("receiveNotification", handleReceiveNotification);
 
-    
     // Clean up the event listener
     return () => {
       socket.off("receiveNotification", handleReceiveNotification);
@@ -51,8 +49,8 @@ const NotificationButton = () => {
           setStatus("granted");
         } else if (permission === "denied") {
           setStatus("blocked");
-          setShowPopup(true); // Show popup
-          setTimeout(() => setShowPopup(false), 6000); // Hide after 6 seconds
+          setShowDropdown(true); // Show dropdown with instructions
+          setTimeout(() => setShowDropdown(false), 6000); // Hide after 6 seconds
         }
       });
     }
@@ -63,61 +61,64 @@ const NotificationButton = () => {
     if (link) {
       window.open(link, "_blank"); // Open the link in a new tab
     }
+    setShowDropdown(false); // Close dropdown after clicking
+  };
+
+  // Toggle notification dropdown
+  const toggleDropdown = () => {
+    setShowDropdown((prev) => !prev);
   };
 
   return (
-    <div className="relative">
-      {/* Enable Notifications Button */}
-      {(status === "default" || status === "denied" || status === "") && (
+    <div className="relative flex items-center space-x-3">
+      {/* Enable Notifications Button (Visible only if not granted) */}
+      {status !== "granted" && (
         <button
           onClick={handleEnableNotifications}
-          className={`px-4 py-2 rounded-md font-semibold transition ${
-            status === "granted"
-              ? "bg-gray-300 text-gray-700 cursor-default"
-              : "bg-blue-600 text-white hover:bg-blue-700"
-          }`}
-          disabled={status === "granted"}
+          className="px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-md hover:bg-blue-800 border border-blue-600 shadow-md transition duration-300"
         >
-          {status === "granted" ? "Notifications Enabled" : "Enable Notifications"}
+          Enable Notifications
         </button>
       )}
 
-      {/* Popup for Blocked Notifications */}
-      {showPopup && (
-        <div className="absolute left-0 mt-2 w-64 p-3 bg-red-100 text-red-600 border border-red-400 rounded-md shadow-md">
-          <p>⚠️ Notifications are blocked.</p>
-          <p>Manually enable them:</p>
-          <ol className="list-decimal list-inside text-sm">
-            <li>Click the **🔒 Lock icon** next to the URL</li>
-            <li>Find **Notifications**</li>
-            <li>Set to **Allow** and refresh</li>
-          </ol>
-        </div>
-      )}
+      {/* Bell Icon Button */}
+      <button
+        onClick={toggleDropdown}
+        className="relative p-2 text-white bg-gray-800 rounded-full hover:bg-gray-700 border border-gray-700 shadow-md transition duration-300 focus:outline-none"
+      >
+        <NotificationsIcon fontSize="large" />
+        {notifications.length > 0 && (
+          <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-600 text-white text-xs font-bold rounded-full flex items-center justify-center border border-gray-900">
+            {notifications.length}
+          </span>
+        )}
+      </button>
 
-      {/* Display Received Notifications */}
-      {status === "granted" && (
-        <div className="mt-4">
-          <NotificationsIcon className="text-blue-600 mr-2" /> {/* Material Icon */}
-          <ul className="space-y-2">
-            {notifications.map((notification, index) => (
-              <li
-                key={index}
-                className="p-2 bg-gray-100 rounded-md cursor-pointer hover:bg-gray-200"
-                onClick={() => handleNotificationClick(notification.link)}
-              >
-                <div className="flex items-center">
-                  
-                  <div>
-                    <p className="font-medium">{notification.message}</p>
-                    {notification.link && (
-                      <p className="text-sm text-blue-500 hover:underline">Click to view more</p>
-                    )}
+      {/* Notification Dropdown (YouTube-like) */}
+      {showDropdown && (
+        <div className="absolute right-0 mt-24 w-80 bg-gray-900 border border-gray-800 rounded-lg shadow-lg max-h-96 overflow-y-auto z-50">
+          {
+           notifications.length > 0 ? (
+            <ul className="divide-y divide-gray-800">
+              {notifications.map((notification, index) => (
+                <li
+                  key={index}
+                  className="p-4 text-gray-300 hover:bg-gray-800 cursor-pointer transition duration-200"
+                >
+                  <div className="flex items-start space-x-3">
+                    <NotificationsIcon className="text-blue-400 flex-shrink-0" />
+  
+                    <p className="text-sm text-blue-400 font-medium">{notification}</p>
+          
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="p-4 text-gray-400 text-sm text-center">
+              No notifications yet
+            </div>
+          )}
         </div>
       )}
     </div>

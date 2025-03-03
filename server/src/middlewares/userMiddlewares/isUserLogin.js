@@ -13,6 +13,8 @@ async function isUserLoggedin(req, res, next) {
   
       // Verify the token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      console.log(decoded);
       
       // Find the user in the database
       const currentUser = await User.findById(decoded.id); // Assuming decoded contains a 'userId' for regular users

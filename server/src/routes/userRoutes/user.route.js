@@ -1,14 +1,16 @@
 
 import { Router } from "express";
 import { login, register, forgotPassword, logout, resetPassword, signupUsingGoogle, loginUsingGoogle} from "../../controllers/V1/User/user.controller.js";
-import eventRouter from "../eventRoutes/event.route.js";
 import { upload } from "../../middlewares/multerMiddlerware/multer.middleware.js";
 import profileRouter from "./user.profile.routes.js";
+import userEventRouter from "./user.event.routes.js";
+import eventRouter from './../eventRoutes/event.route.js';
 
 const userRouter = Router();
 
 
 
+userRouter.use("/event", userEventRouter);
 userRouter.use("/event", eventRouter);
 userRouter.use("/profile", profileRouter);
 

@@ -19,14 +19,23 @@ export const io = new Server(server, {
 /***  to store the connected the users to send the notifications to all the users ***/
 export const users = new Map();
 export const client = redis.createClient();
-
+client.connect().catch(console.error);
 
 /***  To Create A Room to when connection established to backend */
 io.on("connection", (socket) => {
 
     console.log("A user connected");
     
-    
+    const userId = socket.handshake.query.userId;
+
+    if (!userId) {
+        console.log("❌ No User ID provided. Disconnecting...");
+        return socket.disconnect();
+    }
+
+    users.set(userId, socket.id);
+    client.hSet(userId, socket.id);
+
     socket.on("message", (data) => {
         console.log("Message from user:", data);
         io.emit("chat message", data);

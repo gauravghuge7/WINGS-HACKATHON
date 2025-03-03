@@ -11,7 +11,7 @@ import {
 
 const profileRouter = Router();
 
-profileRouter.route("/getUserDashboard")
+profileRouter.route("/getUserDashboard")    
     .get(
         isUserLoggedin,
         getUserDashBoard

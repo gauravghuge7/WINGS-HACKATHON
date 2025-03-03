@@ -1,44 +1,49 @@
 import { Router } from "express";
-const router = Router();
+const userEventRouter = Router();
 import { RegisterForEvent, UnRegisterForEvent, likeEvent, dislikeEvent, bookmarkEvent, unbookmarkEvent, BookmarkedEvents, LikedEvents, generateAIDescription, getAllUserEvents } from "../../controllers/V1/User/user.event.controller.js";
+import isUserLoggedin from "../../middlewares/userMiddlewares/isUserLogin.js";
 
 // register for event
-router.route("/register-for-event/:id")
+userEventRouter.route("/register-for-event/:id")
       .post(RegisterForEvent);
 
 // unregister for event
-router.route("/unregister-for-event/:id")
+userEventRouter.route("/unregister-for-event/:id")
       .post(UnRegisterForEvent);
 
 // like event
-router.route("/like/:id")
+userEventRouter.route("/like/:id")
       .post(likeEvent);
 
 // dislike event
-router.route("/dislike/:id")
+userEventRouter.route("/dislike/:id")
       .post(dislikeEvent);
 
 // bookmark event
-router.route("/bookmark/:id")
+userEventRouter.route("/bookmark/:id")
       .post(bookmarkEvent);
 
 // unbookmark event
-router.route("/unbookmark/:id")
+userEventRouter.route("/unbookmark/:id")
       .post(unbookmarkEvent);
 
 // get All Bookmarked Events
-router.route("/bookmarked-events/:userId")
+userEventRouter.route("/bookmarked-events/:userId")
       .get(BookmarkedEvents);
 
 // get All Liked Events
-router.route("/liked-events/:userId")
+userEventRouter.route("/liked-events/:userId")
       .get(LikedEvents);
 
 // get All User Events
-router.route("/user-events/:userId")
-      .get(getAllUserEvents);
+userEventRouter.route("/getAllUserEvents")
+      .get(
+            isUserLoggedin,
+            getAllUserEvents
+      );
 
-router.route("/api/generate-description")
+      userEventRouter.route("/api/generate-description")
       .post(generateAIDescription);
 
-export default router;
+
+export default userEventRouter;

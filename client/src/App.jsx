@@ -13,8 +13,7 @@ function App() {
         <Routes>
 
             <Route>
-              
-             
+ 
 
               {/*  Admin Router Here */}
               <Route path='/admin/*' element={<AdminRoute />} />
